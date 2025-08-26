@@ -3,11 +3,11 @@
 # Nombre de la Materia
 - Construccion de Software II
 ## Integrantes del Equipo
-- [Oscar Correa] (enlace-al-perfil-github)
-- [Karina Uribe] (enlace-al-perfil-github)
-- [Leslie Zapata](enlace-al-perfil-github)
+- [Oscar Correa](https://github.com/oscardcd)
+- [Karina Uribe](https://github.com/KarinaUribe) 
+- [Leslie Zapata](https://github.com/lelizapata)
 ## Tecnología en que se Desarrolló
-- <TECONOLOGIA>
+- Java
 
 - El proyecto se estara realizando con el lenguaje java orientado hacia arquitectura exagonal con sprintboot.
 
