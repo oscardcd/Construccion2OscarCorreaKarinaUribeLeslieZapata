@@ -1,0 +1,103 @@
+package app.domain.models;
+
+/**
+ *
+ * @author USUARIO
+ */
+public class User {
+
+    private String fullName;
+    private String idNumber;
+    private String email;
+    private String phone;
+    private String birthDate;
+    private String address;
+    private String role;
+    private String username;
+    private String password;
+
+    public User(String fullName, String idNumber, String email, String birthDate,
+            String address, String role, String username, String password) {
+        this.fullName = fullName;
+        this.idNumber = idNumber;
+        this.email = email;
+//        this.phone = phone;
+//        this.dateBirth = birthDate;
+        this.address = address;
+        this.role = role;
+        this.username = username;
+        this.password = password;
+    }
+
+    public String getfullname() {
+        return fullName;
+    }
+
+    public void setfullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getIdNumber() {
+        return idNumber;
+    }
+
+    public void setIdNumber(String IdNumber) {
+        this.idNumber = IdNumber;
+    }
+
+    public String getemail() {
+        return email;
+    }
+
+    public void setemail(String email) {
+        this.email = email;
+    }
+
+    public String getphone() {
+        return phone;
+    }
+
+    public void setphone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getaddress() {
+        return address;
+    }
+
+    public void setaddress(String address) {
+        this.address = address;
+    }
+
+    public String getrole() {
+        return role;
+    }
+
+    public void setrole(String role) {
+        this.role = role;
+    }
+
+    public String getusername() {
+        return username;
+    }
+
+    public void setusername(String username) {
+        this.username = username;
+    }
+
+    public String getpassword() {
+        return password;
+    }
+
+    public void setpassword(String password) {
+        this.password = password;
+    }
+}
