@@ -16,19 +16,7 @@ public class User {
     private String username;
     private String password;
 
-    public User(String fullName, String idNumber, String email, String birthDate,
-            String address, String role, String username, String password) {
-        this.fullName = fullName;
-        this.idNumber = idNumber;
-        this.email = email;
-//        this.phone = phone;
-//        this.dateBirth = birthDate;
-        this.address = address;
-        this.role = role;
-        this.username = username;
-        this.password = password;
-    }
-
+    
     public String getfullname() {
         return fullName;
     }
