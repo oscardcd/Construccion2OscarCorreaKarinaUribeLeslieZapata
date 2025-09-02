@@ -11,6 +11,7 @@ public class Nurse extends User {
         this.username = username;
         this.password = password;
         this.department = department;
+        
     }
 
     // Methods specific to Nurse
