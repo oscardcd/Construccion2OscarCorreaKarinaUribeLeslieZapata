@@ -1,35 +1,42 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package app.adapter.in.validators;
 
-/**
- *
- * @author oscarcorrea
- */
 public abstract class SimpleValidators {
 
-    public String stringValidator(String value, String element) throws Exception {
+    public String stringValidator(String element, String value) throws Exception {
         if (value == null || value.equals("")) {
-            throw new Exception(element + "no puede tener un valor vacio o nulo");
+            throw new Exception(element + " no puede tener un valor vacio o nulo");
         }
         return value;
     }
 
-    public int integerValidator(String value, String element) throws Exception {
+    public int integerValidator(String element, String value) throws Exception {
         stringValidator(element, value);
-
-//        try {
-//
-//            if (value == null || value.equals("")) {
-//                throw new Exception(element + "no puede tener un valor vacio o nulo");
-//            }
-//            return value;
-//        } catch Exception ()
-//                     {
-//            }
-//        }
-        return Integer.parseInt(value);
+        try {
+            int intValue = Integer.parseInt(value);
+            return intValue;
+        } catch (NumberFormatException e) {
+            throw new Exception(element + " debe ser un valor numerico");
+        }
     }
+
+    public long longValidator(String element, String value) throws Exception {
+        stringValidator(element, value);
+        try {
+            long longValue = Long.parseLong(value);
+            return longValue;
+        } catch (Exception e) {
+            throw new Exception(element + " debe ser un valor numerico");
+        }
+    }
+
+    public double doubleValidator(String element, String value) throws Exception {
+        stringValidator(element, value);
+        try {
+            double doubleValue = Double.parseDouble(value);
+            return doubleValue;
+        } catch (Exception e) {
+            throw new Exception(element + " debe ser un valor numerico");
+        }
+    }
+
 }

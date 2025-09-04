@@ -1,5 +1,7 @@
 package app.domain.models;
 
+import app.domain.models.enums.Role;
+
 /**
  *
  * @author USUARIO
@@ -12,7 +14,7 @@ public class User {
     private String phone;
     private String birthDate;
     private String address;
-    private String role;
+    private Role role;
     private String username;
     private String password;
 
@@ -64,11 +66,11 @@ public class User {
         this.address = address;
     }
 
-    public String getrole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setrole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
