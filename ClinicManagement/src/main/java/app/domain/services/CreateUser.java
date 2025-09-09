@@ -16,11 +16,11 @@ public class CreateUser {
 
     public void create(User user) throws Exception {
         if (userPort.findByDocument(user) != null) {
-            throw new Exception("ya existe una persona registrada con esa cedula");
+            throw new Exception("There is a person registered with this ID");
         }
 
         if (!user.getRole().equals(Role.ADMIN) && userPort.findByUserName(user) != null) {
-            throw new Exception("ya existe una persona registrada con ese nombre de usuario");
+            throw new Exception("There is already a person registered with that username");
         }
         userPort.save(user);
     }

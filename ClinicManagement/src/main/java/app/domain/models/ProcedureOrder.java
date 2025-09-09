@@ -35,6 +35,31 @@ public class ProcedureOrder {
         this.specialistId = specialistId;
         this.cost = cost;
     }
+    
+    public String getOrderId() {
+        return orderId;
+    }
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+    public String getPatientId() {
+        return patientId;
+    }
+    public void setPatientId(String patientId) {
+        this.patientId = patientId;
+    }
+    public String getDoctorId() {
+        return doctorId;
+    }
+    public void setDoctorId(String doctorId) {
+        this.doctorId = doctorId;
+    }
+    public String getCreationDate() {
+        return creationDate;
+    }
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
 
     public long getItemNumber() {
         return itemNumber;
