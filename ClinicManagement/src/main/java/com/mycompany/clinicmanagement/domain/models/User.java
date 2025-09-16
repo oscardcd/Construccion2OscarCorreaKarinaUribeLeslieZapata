@@ -1,6 +1,7 @@
 package com.mycompany.clinicmanagement.domain.models;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -19,6 +20,8 @@ public class User {
     private String username; // Único, máximo 15 caracteres, solo letras y números
     private String password; // Mayúscula, número, carácter especial, mínimo 8 caracteres
     private boolean isActive;
+    private LocalDateTime createdAt; // Fecha de creación
+    private LocalDateTime updatedAt; // Fecha de última actualización
 
     public enum Role {
         RECURSOS_HUMANOS("Recursos Humanos"),
@@ -179,6 +182,22 @@ public class User {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
