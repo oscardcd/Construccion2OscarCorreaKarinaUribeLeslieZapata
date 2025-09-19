@@ -2,10 +2,7 @@ package app.domain.models;
 
 import java.util.HashMap;
 
-/**
- *
- * @author USUARIO
- */
+
 public class MedicalRecord {
 
     private String patientId;
