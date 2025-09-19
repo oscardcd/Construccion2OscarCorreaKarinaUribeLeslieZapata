@@ -2,10 +2,6 @@ package app.domain.models;
 
 import java.util.List;
 
-/**
- *
- * @author USUARIO
- */
 public class MedicalVisit {
 
     private String date;
