@@ -133,67 +133,6 @@ public class UserFactory {
     }
 
     /**
-     * Crea un usuario temporal para testing
-     */
-    public User createTestUser(User.Role role) {
-        String testId = UUID.randomUUID().toString().substring(0, 8);
-        return UserBuilder.create(userDomainService)
-                .withDocumentNumber(testId)
-                .withFullName("Usuario Test " + testId)
-                .withEmail("test" + testId + "@example.com")
-                .withPhone(generateRandomPhone())
-                .withBirthDate(LocalDate.now().minusYears(25))
-                .withAddress("Dirección Test")
-                .withRole(role)
-                .withUsername("test" + testId)
-                .withPassword("Test123!")
-                .withActiveStatus(true)
-                .build();
-    }
-
-    /**
-     * Crea un usuario desde datos de formulario
-     */
-    public User createUserFromForm(String documentNumber, String fullName, String email,
-            String phone, String birthDateString, String address,
-            String roleString, String username, String password) {
-        return UserBuilder.create(userDomainService)
-                .withDocumentNumber(documentNumber)
-                .withFullName(fullName)
-                .withEmail(email)
-                .withPhone(phone)
-                .withBirthDate(birthDateString)
-                .withAddress(address)
-                .withRole(roleString)
-                .withUsername(username)
-                .withPassword(password)
-                .withActiveStatus(true)
-                .build();
-    }
-
-    /**
-     * Crea un usuario para actualización (sin validaciones estrictas)
-     */
-    public User createUserForUpdate(Long id, String documentNumber, String fullName,
-            String email, String phone, LocalDate birthDate,
-            String address, User.Role role, String username,
-            String password, boolean active) {
-        return UserBuilder.create(userDomainService)
-                .withId(id)
-                .withDocumentNumber(documentNumber)
-                .withFullName(fullName)
-                .withEmail(email)
-                .withPhone(phone)
-                .withBirthDate(birthDate)
-                .withAddress(address)
-                .withRole(role)
-                .withUsername(username)
-                .withPassword(password)
-                .withActiveStatus(active)
-                .buildWithoutValidation();
-    }
-
-    /**
      * Genera un nombre de usuario basado en el nombre completo
      */
     private String generateUsername(String fullName) {
