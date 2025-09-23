@@ -6,7 +6,6 @@ import com.mycompany.clinicmanagement.domain.service.UserDomainService;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 /**
  * Factory para crear usuarios de diferentes tipos
