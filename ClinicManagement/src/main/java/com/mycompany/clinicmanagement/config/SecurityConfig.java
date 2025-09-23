@@ -1,23 +1,13 @@
 package com.mycompany.clinicmanagement.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Configuración de seguridad para la aplicación
- * Proporciona beans de seguridad necesarios
+ * Simplificada para desarrollo básico
  */
 @Configuration
 public class SecurityConfig {
-
-    /**
-     * Bean para encriptación de contraseñas
-     * Usa BCrypt con factor de trabajo 12
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(12);
-    }
+    // Configuración de seguridad básica
+    // Sin encriptación de contraseñas para simplificar el desarrollo
 }
