@@ -1,6 +1,7 @@
 package com.mycompany.clinicmanagement.domain.service;
 
 import com.mycompany.clinicmanagement.domain.models.Patient;
+import com.mycompany.clinicmanagement.domain.models.User;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -258,5 +259,34 @@ public class PatientDomainService {
         if (!hasValidEmergencyContact(patient)) {
             throw new IllegalArgumentException("El paciente debe tener un contacto de emergencia válido");
         }
+    }
+
+    /**
+     * Verifica si un usuario puede gestionar pacientes
+     * 
+     * @param user Usuario a verificar
+     * @return true si puede gestionar pacientes
+     */
+    public boolean canManagePatients(User user) {
+        if (user == null) {
+            return false;
+        }
+        return "Personal Administrativo".equals(user.getRole());
+    }
+
+    /**
+     * Verifica si un usuario puede acceder a información de pacientes
+     * 
+     * @param user Usuario a verificar
+     * @return true si puede acceder
+     */
+    public boolean canAccessPatientInfo(User user) {
+        if (user == null) {
+            return false;
+        }
+        String role = user.getRole();
+        return "Personal Administrativo".equals(role) ||
+                "Médico".equals(role) ||
+                "Enfermera".equals(role);
     }
 }
