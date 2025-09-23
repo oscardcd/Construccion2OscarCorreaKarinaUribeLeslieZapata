@@ -4,7 +4,6 @@ import com.mycompany.clinicmanagement.application.port.UserRepositoryPort;
 import com.mycompany.clinicmanagement.application.port.UserServicePort;
 import com.mycompany.clinicmanagement.domain.models.User;
 import com.mycompany.clinicmanagement.domain.service.UserDomainService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,14 +23,11 @@ public class UserService implements UserServicePort {
 
     private final UserRepositoryPort userRepository;
     private final UserDomainService userDomainService;
-    private final PasswordEncoder passwordEncoder;
 
     public UserService(UserRepositoryPort userRepository,
-            UserDomainService userDomainService,
-            PasswordEncoder passwordEncoder) {
+            UserDomainService userDomainService) {
         this.userRepository = userRepository;
         this.userDomainService = userDomainService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -54,7 +50,7 @@ public class UserService implements UserServicePort {
         }
 
         // Encriptar contraseña
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // Contraseña se guarda sin encriptar para simplificar el desarrollo
 
         // Establecer fechas
         user.setCreatedAt(LocalDateTime.now());
@@ -97,7 +93,7 @@ public class UserService implements UserServicePort {
             user.setPassword(existingUser.get().getPassword());
         } else {
             // Encriptar nueva contraseña
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            // Contraseña se guarda sin encriptar para simplificar el desarrollo
         }
 
         // Mantener fecha de creación
@@ -168,7 +164,7 @@ public class UserService implements UserServicePort {
         Optional<User> user = userRepository.findByUsername(username);
 
         if (user.isPresent() && user.get().isActive()) {
-            if (passwordEncoder.matches(password, user.get().getPassword())) {
+            if (password.equals(user.get().getPassword())) {
                 return user;
             }
         }
@@ -184,7 +180,7 @@ public class UserService implements UserServicePort {
         }
 
         // Verificar contraseña actual
-        if (!passwordEncoder.matches(oldPassword, user.get().getPassword())) {
+        if (!oldPassword.equals(user.get().getPassword())) {
             throw new IllegalArgumentException("La contraseña actual es incorrecta");
         }
 
@@ -194,7 +190,7 @@ public class UserService implements UserServicePort {
         userDomainService.validateUserData(tempUser);
 
         // Actualizar contraseña
-        user.get().setPassword(passwordEncoder.encode(newPassword));
+        user.get().setPassword(newPassword);
         user.get().setUpdatedAt(LocalDateTime.now());
         userRepository.save(user.get());
 
