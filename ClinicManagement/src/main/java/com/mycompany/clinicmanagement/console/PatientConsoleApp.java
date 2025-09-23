@@ -502,7 +502,7 @@ public class PatientConsoleApp {
         try {
             List<User> allUsers = userService.getAllUsers();
             return allUsers.stream()
-                    .filter(user -> "Personal Administrativo".equals(user.getRole()))
+                    .filter(user -> User.Role.PERSONAL_ADMINISTRATIVO.equals(user.getRole()))
                     .findFirst()
                     .orElse(null);
         } catch (Exception e) {

@@ -271,7 +271,7 @@ public class PatientDomainService {
         if (user == null) {
             return false;
         }
-        return "Personal Administrativo".equals(user.getRole());
+        return User.Role.PERSONAL_ADMINISTRATIVO.equals(user.getRole());
     }
 
     /**
@@ -284,9 +284,9 @@ public class PatientDomainService {
         if (user == null) {
             return false;
         }
-        String role = user.getRole();
-        return "Personal Administrativo".equals(role) ||
-                "Médico".equals(role) ||
-                "Enfermera".equals(role);
+        User.Role role = user.getRole();
+        return User.Role.PERSONAL_ADMINISTRATIVO.equals(role) ||
+                User.Role.MEDICO.equals(role) ||
+                User.Role.ENFERMERA.equals(role);
     }
 }
