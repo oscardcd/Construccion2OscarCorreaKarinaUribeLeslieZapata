@@ -2,10 +2,7 @@ package app.domain.models;
 
 import java.util.List;
 
-/**
- *
- * @author USUARIO
- */
+
 public class Invoice {
 
     private String invoiceId;

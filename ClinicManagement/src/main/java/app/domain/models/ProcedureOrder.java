@@ -1,9 +1,6 @@
 package app.domain.models;
 
-/**
- *
- * @author USUARIO
- */
+
 public class ProcedureOrder {
 
     private String orderId;
