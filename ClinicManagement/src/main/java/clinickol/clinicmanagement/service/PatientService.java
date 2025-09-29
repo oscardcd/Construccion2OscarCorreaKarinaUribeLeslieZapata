@@ -1,7 +1,7 @@
 package clinickol.clinicmanagement.service;
 
 import clinickol.clinicmanagement.model.Patient;
-import clinickol.clinicmanagement.model.Genero;
+import clinickol.clinicmanagement.model.Gender;
 import clinickol.clinicmanagement.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -106,7 +106,7 @@ public class PatientService {
      * Buscar pacientes por género
      */
     @Transactional(readOnly = true)
-    public List<Patient> buscarPacientesPorGenero(Genero genero) {
+    public List<Patient> buscarPacientesPorGenero(Gender genero) {
         return patientRepository.findByGenero(genero);
     }
 
@@ -224,7 +224,7 @@ public class PatientService {
      * Obtener estadísticas por género
      */
     @Transactional(readOnly = true)
-    public long contarPacientesPorGenero(Genero genero) {
+    public long contarPacientesPorGenero(Gender genero) {
         return patientRepository.countByGenero(genero);
     }
 }

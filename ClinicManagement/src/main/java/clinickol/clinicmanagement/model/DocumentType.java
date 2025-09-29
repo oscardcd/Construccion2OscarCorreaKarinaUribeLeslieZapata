@@ -3,7 +3,7 @@ package clinickol.clinicmanagement.model;
 /**
  * Enum para los tipos de documento de identidad
  */
-public enum TipoDocumento {
+public enum DocumentType {
     CEDULA("Cédula"),
     PASAPORTE("Pasaporte"),
     TARJETA_IDENTIDAD("Tarjeta de Identidad"),
@@ -12,7 +12,7 @@ public enum TipoDocumento {
 
     private final String descripcion;
 
-    TipoDocumento(String descripcion) {
+    DocumentType(String descripcion) {
         this.descripcion = descripcion;
     }
 

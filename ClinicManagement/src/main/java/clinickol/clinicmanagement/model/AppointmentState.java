@@ -3,7 +3,7 @@ package clinickol.clinicmanagement.model;
 /**
  * Enum para los estados de una cita médica
  */
-public enum EstadoCita {
+public enum AppointmentState {
     PROGRAMADA("Programada"),
     CONFIRMADA("Confirmada"),
     EN_PROGRESO("En Progreso"),
@@ -13,7 +13,7 @@ public enum EstadoCita {
 
     private final String descripcion;
 
-    EstadoCita(String descripcion) {
+    AppointmentState(String descripcion) {
         this.descripcion = descripcion;
     }
 

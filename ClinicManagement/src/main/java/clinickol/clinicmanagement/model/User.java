@@ -33,7 +33,7 @@ public abstract class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private TipoDocumento tipoDocumento;
+    private DocumentType tipoDocumento;
 
     @Column(nullable = false)
     private LocalDateTime fechaCreacion;
@@ -50,7 +50,7 @@ public abstract class User {
     }
 
     public User(String nombre, String apellido, String email, String telefono,
-            String documento, TipoDocumento tipoDocumento) {
+            String documento, DocumentType tipoDocumento) {
         this();
         this.nombre = nombre;
         this.apellido = apellido;
@@ -112,11 +112,11 @@ public abstract class User {
         this.documento = documento;
     }
 
-    public TipoDocumento getTipoDocumento() {
+    public DocumentType getTipoDocumento() {
         return tipoDocumento;
     }
 
-    public void setTipoDocumento(TipoDocumento tipoDocumento) {
+    public void setTipoDocumento(DocumentType tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
     }
 

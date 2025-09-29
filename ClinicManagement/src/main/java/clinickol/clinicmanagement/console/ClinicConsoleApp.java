@@ -1,23 +1,19 @@
 package clinickol.clinicmanagement.console;
 
+import clinickol.clinicmanagement.model.Gender;
 import clinickol.clinicmanagement.model.Patient;
-import clinickol.clinicmanagement.model.TipoDocumento;
-import clinickol.clinicmanagement.model.Genero;
+import clinickol.clinicmanagement.model.DocumentType;
 import clinickol.clinicmanagement.service.PatientService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
-/**
- * Aplicación de consola para gestión de clínica
- */
 @Component
 public class ClinicConsoleApp implements CommandLineRunner {
 
@@ -74,7 +70,7 @@ public class ClinicConsoleApp implements CommandLineRunner {
                 running = false;
                 break;
             default:
-                System.out.println("❌ Opción inválida. Por favor, seleccione una opción válida.");
+                System.out.println("Opción inválida. Por favor, seleccione una opción válida.");
         }
     }
 
@@ -145,7 +141,7 @@ public class ClinicConsoleApp implements CommandLineRunner {
                     enSubmenu = false;
                     break;
                 default:
-                    System.out.println("❌ Opción inválida. Por favor, seleccione una opción válida.");
+                    System.out.println(" Opción inválida. Por favor, seleccione una opción válida.");
             }
         }
     }
@@ -172,15 +168,15 @@ public class ClinicConsoleApp implements CommandLineRunner {
             patient.setDocumento(scanner.nextLine().trim());
 
             System.out.println("Tipo de documento:");
-            for (int i = 0; i < TipoDocumento.values().length; i++) {
-                System.out.println((i + 1) + ". " + TipoDocumento.values()[i].getDescripcion());
+            for (int i = 0; i < DocumentType.values().length; i++) {
+                System.out.println((i + 1) + ". " + DocumentType.values()[i].getDescripcion());
             }
             System.out.print("Seleccione tipo de documento: ");
             int tipoDoc = leerOpcion() - 1;
-            if (tipoDoc >= 0 && tipoDoc < TipoDocumento.values().length) {
-                patient.setTipoDocumento(TipoDocumento.values()[tipoDoc]);
+            if (tipoDoc >= 0 && tipoDoc < DocumentType.values().length) {
+                patient.setTipoDocumento(DocumentType.values()[tipoDoc]);
             } else {
-                System.out.println("❌ Tipo de documento inválido");
+                System.out.println("Tipo de documento inválido");
                 return;
             }
 
@@ -189,18 +185,18 @@ public class ClinicConsoleApp implements CommandLineRunner {
             try {
                 patient.setFechaNacimiento(LocalDate.parse(fechaStr, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             } catch (DateTimeParseException e) {
-                System.out.println("❌ Formato de fecha inválido");
+                System.out.println("Formato de fecha inválido");
                 return;
             }
 
             System.out.println("Género:");
-            for (int i = 0; i < Genero.values().length; i++) {
-                System.out.println((i + 1) + ". " + Genero.values()[i].getDescripcion());
+            for (int i = 0; i < Gender.values().length; i++) {
+                System.out.println((i + 1) + ". " + Gender.values()[i].getDescripcion());
             }
             System.out.print("Seleccione género: ");
             int genero = leerOpcion() - 1;
-            if (genero >= 0 && genero < Genero.values().length) {
-                patient.setGenero(Genero.values()[genero]);
+            if (genero >= 0 && genero < Gender.values().length) {
+                patient.setGenero(Gender.values()[genero]);
             } else {
                 System.out.println("❌ Género inválido");
                 return;
@@ -347,14 +343,14 @@ public class ClinicConsoleApp implements CommandLineRunner {
 
     private void buscarPacientesPorGenero() {
         System.out.println("\nSeleccione el género:");
-        for (int i = 0; i < Genero.values().length; i++) {
-            System.out.println((i + 1) + ". " + Genero.values()[i].getDescripcion());
+        for (int i = 0; i < Gender.values().length; i++) {
+            System.out.println((i + 1) + ". " + Gender.values()[i].getDescripcion());
         }
         System.out.print("Seleccione género: ");
         int genero = leerOpcion() - 1;
 
-        if (genero >= 0 && genero < Genero.values().length) {
-            List<Patient> pacientes = patientService.buscarPacientesPorGenero(Genero.values()[genero]);
+        if (genero >= 0 && genero < Gender.values().length) {
+            List<Patient> pacientes = patientService.buscarPacientesPorGenero(Gender.values()[genero]);
 
             if (pacientes.isEmpty()) {
                 System.out.println("No se encontraron pacientes con el género seleccionado.");
@@ -401,33 +397,39 @@ public class ClinicConsoleApp implements CommandLineRunner {
 
                 System.out.print("Nombre [" + patient.getNombre() + "]: ");
                 String nombre = scanner.nextLine().trim();
-                if (!nombre.isEmpty())
+                if (!nombre.isEmpty()) {
                     patient.setNombre(nombre);
+                }
 
                 System.out.print("Apellido [" + patient.getApellido() + "]: ");
                 String apellido = scanner.nextLine().trim();
-                if (!apellido.isEmpty())
+                if (!apellido.isEmpty()) {
                     patient.setApellido(apellido);
+                }
 
                 System.out.print("Email [" + patient.getEmail() + "]: ");
                 String email = scanner.nextLine().trim();
-                if (!email.isEmpty())
+                if (!email.isEmpty()) {
                     patient.setEmail(email);
+                }
 
                 System.out.print("Teléfono [" + patient.getTelefono() + "]: ");
                 String telefono = scanner.nextLine().trim();
-                if (!telefono.isEmpty())
+                if (!telefono.isEmpty()) {
                     patient.setTelefono(telefono);
+                }
 
                 System.out.print("Dirección [" + patient.getDireccion() + "]: ");
                 String direccion = scanner.nextLine().trim();
-                if (!direccion.isEmpty())
+                if (!direccion.isEmpty()) {
                     patient.setDireccion(direccion);
+                }
 
                 System.out.print("Ciudad [" + patient.getCiudad() + "]: ");
                 String ciudad = scanner.nextLine().trim();
-                if (!ciudad.isEmpty())
+                if (!ciudad.isEmpty()) {
                     patient.setCiudad(ciudad);
+                }
 
                 System.out.print("Peso [" + patient.getPeso() + "]: ");
                 String pesoStr = scanner.nextLine().trim();
@@ -514,10 +516,10 @@ public class ClinicConsoleApp implements CommandLineRunner {
 
         try {
             long totalActivos = patientService.contarPacientesActivos();
-            long masculinos = patientService.contarPacientesPorGenero(Genero.MASCULINO);
-            long femeninos = patientService.contarPacientesPorGenero(Genero.FEMENINO);
-            long otros = patientService.contarPacientesPorGenero(Genero.OTRO);
-            long noEspecificado = patientService.contarPacientesPorGenero(Genero.NO_ESPECIFICADO);
+            long masculinos = patientService.contarPacientesPorGenero(Gender.MASCULINO);
+            long femeninos = patientService.contarPacientesPorGenero(Gender.FEMENINO);
+            long otros = patientService.contarPacientesPorGenero(Gender.OTRO);
+            long noEspecificado = patientService.contarPacientesPorGenero(Gender.NO_ESPECIFICADO);
 
             System.out.println("Total de pacientes activos: " + totalActivos);
             System.out.println("Pacientes masculinos: " + masculinos);
@@ -537,8 +539,8 @@ public class ClinicConsoleApp implements CommandLineRunner {
             // Crear pacientes de ejemplo
             Patient paciente1 = new Patient(
                     "Juan", "Pérez", "juan.perez@email.com", "3001234567",
-                    "12345678", TipoDocumento.CEDULA,
-                    LocalDate.of(1990, 5, 15), Genero.MASCULINO);
+                    "12345678", DocumentType.CEDULA,
+                    LocalDate.of(1990, 5, 15), Gender.MASCULINO);
             paciente1.setDireccion("Calle 123 #45-67");
             paciente1.setCiudad("Bogotá");
             paciente1.setCodigoPostal("110111");
@@ -552,8 +554,8 @@ public class ClinicConsoleApp implements CommandLineRunner {
 
             Patient paciente2 = new Patient(
                     "Ana", "García", "ana.garcia@email.com", "3009876543",
-                    "87654321", TipoDocumento.CEDULA,
-                    LocalDate.of(1985, 8, 22), Genero.FEMENINO);
+                    "87654321", DocumentType.CEDULA,
+                    LocalDate.of(1985, 8, 22), Gender.FEMENINO);
             paciente2.setDireccion("Carrera 45 #78-90");
             paciente2.setCiudad("Medellín");
             paciente2.setCodigoPostal("050001");
@@ -567,8 +569,8 @@ public class ClinicConsoleApp implements CommandLineRunner {
 
             Patient paciente3 = new Patient(
                     "Carlos", "López", "carlos.lopez@email.com", "3005556666",
-                    "11223344", TipoDocumento.CEDULA,
-                    LocalDate.of(1992, 12, 3), Genero.MASCULINO);
+                    "11223344", DocumentType.CEDULA,
+                    LocalDate.of(1992, 12, 3), Gender.MASCULINO);
             paciente3.setDireccion("Avenida 68 #12-34");
             paciente3.setCiudad("Cali");
             paciente3.setCodigoPostal("760001");
