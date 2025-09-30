@@ -42,3 +42,4 @@ public interface PatientInputPort {
 
     long contarPacientesPorGenero(String genero);
 }
+

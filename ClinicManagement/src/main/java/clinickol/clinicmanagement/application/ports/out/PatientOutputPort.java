@@ -42,3 +42,4 @@ public interface PatientOutputPort {
 
     long contarPorGenero(String genero);
 }
+

@@ -10,10 +10,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Servicio de aplicación que implementa los casos de uso
- * Orquesta la lógica de negocio usando los puertos
- */
 @Service
 @Transactional
 public class PatientUseCaseService implements PatientInputPort {
@@ -26,17 +22,14 @@ public class PatientUseCaseService implements PatientInputPort {
 
     @Override
     public PatientDomain crearPaciente(PatientDomain patient) {
-        // Validar datos del paciente
         if (!patient.esValido()) {
             throw new RuntimeException("Datos del paciente inválidos");
         }
 
-        // Validar que no exista un paciente con el mismo email
         if (patientOutputPort.existePorEmail(patient.getEmail())) {
             throw new RuntimeException("Ya existe un paciente con el email: " + patient.getEmail());
         }
 
-        // Validar que no exista un paciente con el mismo documento
         if (patientOutputPort.existePorDocumento(patient.getDocumento())) {
             throw new RuntimeException("Ya existe un paciente con el documento: " + patient.getDocumento());
         }
@@ -103,19 +96,16 @@ public class PatientUseCaseService implements PatientInputPort {
         PatientDomain patient = patientOutputPort.buscarPorId(id)
                 .orElseThrow(() -> new RuntimeException("Paciente no encontrado con ID: " + id));
 
-        // Validar email único si cambió
         if (!patient.getEmail().equals(patientActualizado.getEmail()) &&
                 patientOutputPort.existePorEmail(patientActualizado.getEmail())) {
             throw new RuntimeException("Ya existe un paciente con el email: " + patientActualizado.getEmail());
         }
 
-        // Validar documento único si cambió
         if (!patient.getDocumento().equals(patientActualizado.getDocumento()) &&
                 patientOutputPort.existePorDocumento(patientActualizado.getDocumento())) {
             throw new RuntimeException("Ya existe un paciente con el documento: " + patientActualizado.getDocumento());
         }
 
-        // Actualizar campos
         patient.setNombre(patientActualizado.getNombre());
         patient.setApellido(patientActualizado.getApellido());
         patient.setEmail(patientActualizado.getEmail());
@@ -181,3 +171,4 @@ public class PatientUseCaseService implements PatientInputPort {
         return patientOutputPort.contarPorGenero(genero);
     }
 }
+
