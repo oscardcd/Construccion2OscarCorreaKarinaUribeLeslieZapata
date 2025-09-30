@@ -4,10 +4,6 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Clase que representa un Doctor en el sistema
- * Extiende de User para heredar atributos comunes
- */
 @Entity
 @Table(name = "doctors")
 @PrimaryKeyJoinColumn(name = "user_id")
@@ -32,7 +28,7 @@ public class Doctor extends User {
     private Double tarifaConsulta;
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Cita> citas = new ArrayList<>();
+    private List<Appointment> Appointments = new ArrayList<>();
 
     // Constructores
     public Doctor() {
@@ -40,7 +36,7 @@ public class Doctor extends User {
     }
 
     public Doctor(String nombre, String apellido, String email, String telefono,
-            String documento, TipoDocumento tipoDocumento, String especialidad,
+            String documento, DocumentType tipoDocumento, String especialidad,
             String numeroLicencia) {
         super(nombre, apellido, email, telefono, documento, tipoDocumento);
         this.especialidad = especialidad;
@@ -102,23 +98,23 @@ public class Doctor extends User {
         this.tarifaConsulta = tarifaConsulta;
     }
 
-    public List<Cita> getCitas() {
-        return citas;
+    public List<Appointment> getAppointments() {
+        return Appointments;
     }
 
-    public void setCitas(List<Cita> citas) {
-        this.citas = citas;
+    public void setAppointments(List<Appointment> Appointments) {
+        this.Appointments = Appointments;
     }
 
     @Override
     public String toString() {
-        return "Doctor{" +
-                "id=" + getId() +
-                ", nombre='" + getNombre() + '\'' +
-                ", apellido='" + getApellido() + '\'' +
-                ", especialidad='" + especialidad + '\'' +
-                ", numeroLicencia='" + numeroLicencia + '\'' +
-                ", activo=" + getActivo() +
-                '}';
+        return "Doctor{"
+                + "id=" + getId()
+                + ", nombre='" + getNombre() + '\''
+                + ", apellido='" + getApellido() + '\''
+                + ", especialidad='" + especialidad + '\''
+                + ", numeroLicencia='" + numeroLicencia + '\''
+                + ", activo=" + getActivo()
+                + '}';
     }
 }

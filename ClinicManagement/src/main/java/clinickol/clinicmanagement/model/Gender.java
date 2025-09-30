@@ -1,9 +1,6 @@
 package clinickol.clinicmanagement.model;
 
-/**
- * Enum para los géneros
- */
-public enum Genero {
+public enum Gender {
     MASCULINO("Masculino"),
     FEMENINO("Femenino"),
     OTRO("Otro"),
@@ -11,7 +8,7 @@ public enum Genero {
 
     private final String descripcion;
 
-    Genero(String descripcion) {
+    Gender(String descripcion) {
         this.descripcion = descripcion;
     }
 

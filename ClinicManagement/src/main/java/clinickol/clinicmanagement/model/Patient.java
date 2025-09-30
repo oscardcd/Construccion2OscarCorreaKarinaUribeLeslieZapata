@@ -5,10 +5,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Clase que representa un Paciente en el sistema
- * Extiende de User para heredar atributos comunes
- */
 @Entity
 @Table(name = "patients")
 @PrimaryKeyJoinColumn(name = "user_id")
@@ -19,7 +15,7 @@ public class Patient extends User {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "genero")
-    private Genero genero;
+    private Gender genero;
 
     @Column(name = "direccion", length = 200)
     private String direccion;
@@ -55,7 +51,7 @@ public class Patient extends User {
     private Double altura;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Cita> citas = new ArrayList<>();
+    private List<Appointment> Appointments = new ArrayList<>();
 
     // Constructores
     public Patient() {
@@ -63,8 +59,8 @@ public class Patient extends User {
     }
 
     public Patient(String nombre, String apellido, String email, String telefono,
-            String documento, TipoDocumento tipoDocumento, LocalDate fechaNacimiento,
-            Genero genero) {
+            String documento, DocumentType tipoDocumento, LocalDate fechaNacimiento,
+            Gender genero) {
         super(nombre, apellido, email, telefono, documento, tipoDocumento);
         this.fechaNacimiento = fechaNacimiento;
         this.genero = genero;
@@ -117,11 +113,11 @@ public class Patient extends User {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public Genero getGenero() {
+    public Gender getGenero() {
         return genero;
     }
 
-    public void setGenero(Genero genero) {
+    public void setGenero(Gender genero) {
         this.genero = genero;
     }
 
@@ -213,24 +209,24 @@ public class Patient extends User {
         this.altura = altura;
     }
 
-    public List<Cita> getCitas() {
-        return citas;
+    public List<Appointment> getAppointments() {
+        return Appointments;
     }
 
-    public void setCitas(List<Cita> citas) {
-        this.citas = citas;
+    public void setAppointments(List<Appointment> Appointments) {
+        this.Appointments = Appointments;
     }
 
     @Override
     public String toString() {
-        return "Patient{" +
-                "id=" + getId() +
-                ", nombre='" + getNombre() + '\'' +
-                ", apellido='" + getApellido() + '\'' +
-                ", email='" + getEmail() + '\'' +
-                ", fechaNacimiento=" + fechaNacimiento +
-                ", genero=" + genero +
-                ", activo=" + getActivo() +
-                '}';
+        return "Patient{"
+                + "id=" + getId()
+                + ", nombre='" + getNombre() + '\''
+                + ", apellido='" + getApellido() + '\''
+                + ", email='" + getEmail() + '\''
+                + ", fechaNacimiento=" + fechaNacimiento
+                + ", genero=" + genero
+                + ", activo=" + getActivo()
+                + '}';
     }
 }

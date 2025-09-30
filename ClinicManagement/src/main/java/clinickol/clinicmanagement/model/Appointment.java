@@ -3,12 +3,9 @@ package clinickol.clinicmanagement.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-/**
- * Clase que representa una Cita médica
- */
 @Entity
 @Table(name = "citas")
-public class Cita {
+public class Appointment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +27,7 @@ public class Cita {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
-    private EstadoCita estado = EstadoCita.PROGRAMADA;
+    private AppointmentState estado = AppointmentState.PROGRAMADA;
 
     @Column(name = "motivo", length = 500)
     private String motivo;
@@ -49,19 +46,6 @@ public class Cita {
 
     @Column(name = "fecha_actualizacion")
     private LocalDateTime fechaActualizacion;
-
-    // Constructores
-    public Cita() {
-        this.fechaCreacion = LocalDateTime.now();
-    }
-
-    public Cita(Patient patient, Doctor doctor, LocalDateTime fechaHora, String motivo) {
-        this();
-        this.patient = patient;
-        this.doctor = doctor;
-        this.fechaHora = fechaHora;
-        this.motivo = motivo;
-    }
 
     // Getters y Setters
     public Long getId() {
@@ -104,11 +88,11 @@ public class Cita {
         this.duracionMinutos = duracionMinutos;
     }
 
-    public EstadoCita getEstado() {
+    public AppointmentState getEstado() {
         return estado;
     }
 
-    public void setEstado(EstadoCita estado) {
+    public void setEstado(AppointmentState estado) {
         this.estado = estado;
     }
 
@@ -167,12 +151,12 @@ public class Cita {
 
     @Override
     public String toString() {
-        return "Cita{" +
-                "id=" + id +
-                ", patient=" + (patient != null ? patient.getNombreCompleto() : "null") +
-                ", doctor=" + (doctor != null ? doctor.getNombreCompleto() : "null") +
-                ", fechaHora=" + fechaHora +
-                ", estado=" + estado +
-                '}';
+        return "Cita{"
+                + "id=" + id
+                + ", patient=" + (patient != null ? patient.getNombreCompleto() : "null")
+                + ", doctor=" + (doctor != null ? doctor.getNombreCompleto() : "null")
+                + ", fechaHora=" + fechaHora
+                + ", estado=" + estado
+                + '}';
     }
 }

@@ -55,7 +55,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     /**
      * Buscar pacientes por género
      */
-    List<Patient> findByGenero(clinickol.clinicmanagement.model.Genero genero);
+    List<Patient> findByGenero(clinickol.clinicmanagement.model.Gender genero);
 
     /**
      * Buscar pacientes por ciudad
@@ -87,7 +87,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     /**
      * Contar pacientes por género
      */
-    long countByGenero(clinickol.clinicmanagement.model.Genero genero);
+    long countByGenero(clinickol.clinicmanagement.model.Gender genero);
 
     /**
      * Verificar si existe un paciente con el email dado
