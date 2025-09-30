@@ -1,9 +1,9 @@
 package clinickol.clinicmanagement.adapters.out.persistence.mapper;
 
 import clinickol.clinicmanagement.domain.model.PatientDomain;
-import clinickol.clinicmanagement.model.Patient;
-import clinickol.clinicmanagement.model.DocumentType;
-import clinickol.clinicmanagement.model.Gender;
+import clinickol.clinicmanagement.domain.model.Patient;
+import clinickol.clinicmanagement.domain.model.DocumentType;
+import clinickol.clinicmanagement.domain.model.Gender;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -91,4 +91,3 @@ public class PatientMapper {
         return domain;
     }
 }
-

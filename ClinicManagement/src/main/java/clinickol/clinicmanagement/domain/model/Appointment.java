@@ -1,4 +1,4 @@
-package clinickol.clinicmanagement.model;
+package clinickol.clinicmanagement.domain.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;

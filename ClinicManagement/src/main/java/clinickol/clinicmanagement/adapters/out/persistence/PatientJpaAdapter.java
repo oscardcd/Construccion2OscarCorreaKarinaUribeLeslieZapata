@@ -76,7 +76,7 @@ public class PatientJpaAdapter implements PatientOutputPort {
 
     @Override
     public List<PatientDomain> buscarPorGenero(String genero) {
-        return patientRepository.findByGenero(clinickol.clinicmanagement.model.Gender.valueOf(genero)).stream()
+        return patientRepository.findByGenero(clinickol.clinicmanagement.domain.model.Gender.valueOf(genero)).stream()
                 .map(patientMapper::toDomain)
                 .collect(Collectors.toList());
     }
@@ -115,6 +115,6 @@ public class PatientJpaAdapter implements PatientOutputPort {
 
     @Override
     public long contarPorGenero(String genero) {
-        return patientRepository.countByGenero(clinickol.clinicmanagement.model.Gender.valueOf(genero));
+        return patientRepository.countByGenero(clinickol.clinicmanagement.domain.model.Gender.valueOf(genero));
     }
 }

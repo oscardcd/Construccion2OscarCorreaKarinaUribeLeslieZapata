@@ -1,4 +1,4 @@
-package clinickol.clinicmanagement.model;
+package clinickol.clinicmanagement.domain.model;
 
 public enum Gender {
     MASCULINO("Masculino"),

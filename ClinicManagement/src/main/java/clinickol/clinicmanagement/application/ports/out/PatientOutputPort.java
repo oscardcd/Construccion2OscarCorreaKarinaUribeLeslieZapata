@@ -4,10 +4,6 @@ import clinickol.clinicmanagement.domain.model.PatientDomain;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Puerto de salida para persistencia de paciente
- * Define las operaciones que el repositorio debe implementar
- */
 public interface PatientOutputPort {
 
     PatientDomain guardar(PatientDomain patient);
@@ -42,4 +38,3 @@ public interface PatientOutputPort {
 
     long contarPorGenero(String genero);
 }
-

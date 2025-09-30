@@ -6,7 +6,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
@@ -371,4 +370,3 @@ public class PatientConsoleAdapter implements CommandLineRunner {
                 patient.getActivo() ? "✅" : "❌");
     }
 }
-

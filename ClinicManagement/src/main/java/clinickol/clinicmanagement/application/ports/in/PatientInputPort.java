@@ -4,10 +4,6 @@ import clinickol.clinicmanagement.domain.model.PatientDomain;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Puerto de entrada para operaciones de paciente
- * Define los casos de uso disponibles
- */
 public interface PatientInputPort {
 
     PatientDomain crearPaciente(PatientDomain patient);
@@ -42,4 +38,3 @@ public interface PatientInputPort {
 
     long contarPacientesPorGenero(String genero);
 }
-

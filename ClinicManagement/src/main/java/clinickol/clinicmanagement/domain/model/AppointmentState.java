@@ -1,8 +1,5 @@
-package clinickol.clinicmanagement.model;
+package clinickol.clinicmanagement.domain.model;
 
-/**
- * Enum para los estados de una cita médica
- */
 public enum AppointmentState {
     PROGRAMADA("Programada"),
     CONFIRMADA("Confirmada"),

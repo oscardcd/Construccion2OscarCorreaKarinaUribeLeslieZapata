@@ -1,12 +1,8 @@
-package clinickol.clinicmanagement.model;
+package clinickol.clinicmanagement.domain.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-/**
- * Clase base para todos los usuarios del sistema
- * Contiene atributos comunes a todos los tipos de usuarios
- */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "users")
@@ -44,7 +40,6 @@ public abstract class User {
     @Column(nullable = false)
     private Boolean activo = true;
 
-    // Constructores
     public User() {
         this.fechaCreacion = LocalDateTime.now();
     }
@@ -60,7 +55,6 @@ public abstract class User {
         this.tipoDocumento = tipoDocumento;
     }
 
-    // Métodos abstractos
     public abstract String getTipoUsuario();
 
     // Getters y Setters
@@ -144,7 +138,6 @@ public abstract class User {
         this.activo = activo;
     }
 
-    // Métodos de utilidad
     public String getNombreCompleto() {
         return nombre + " " + apellido;
     }

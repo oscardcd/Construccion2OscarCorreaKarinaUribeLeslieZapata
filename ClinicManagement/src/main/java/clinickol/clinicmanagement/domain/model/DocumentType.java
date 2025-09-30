@@ -1,8 +1,5 @@
-package clinickol.clinicmanagement.model;
+package clinickol.clinicmanagement.domain.model;
 
-/**
- * Enum para los tipos de documento de identidad
- */
 public enum DocumentType {
     CEDULA("Cédula"),
     PASAPORTE("Pasaporte"),
