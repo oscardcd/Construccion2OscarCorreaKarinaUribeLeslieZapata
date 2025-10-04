@@ -1,13 +1,14 @@
 package com.mycompany.clinicmanagement.application.usecases.rh;
 import java.time.LocalDate;
-import app.domain.models.MedicalVisit;
+
+import app.domain.models.MedicalRecord;
 
 //Crea una nueva entrada de historia clínica para un paciente en una fecha específica.
 public class CreateMedicalHistoryUseCase {
-        private final MedicalVisit medicalVisit;
+        private final MedicalRecord medicalRecord;
 
-    public CreateMedicalHistoryUseCase(MedicalVisit medicalVisit) {
-        this.medicalVisit = medicalVisit;
+    public CreateMedicalHistoryUseCase(MedicalRecord medicalRecord) {
+        this.medicalRecord = medicalRecord;
     }
 
     //Guarda la fecha, médico, motivo de consulta, síntomas y diagnóstico.
@@ -16,7 +17,7 @@ public class CreateMedicalHistoryUseCase {
             throw new IllegalArgumentException("La fecha no puede ser futura");
         }
 
-        medicalVisit.createHistory(patientId, doctorId,reasonForVisit, date, symptoms, diagnosis);
+        medicalRecord.createHistory(doctorId, doctorId, reasonForVisit, symptoms, diagnosis);
     }
 
 }

@@ -1,4 +1,5 @@
 package com.mycompany.clinicmanagement.application.usecases.rh;
+
 import app.domain.models.MedicalVisit;
 import app.domain.models.ProcedureOrder;
 
@@ -20,7 +21,6 @@ public class AddProcedureHistoryUseCase {
             throw new IllegalArgumentException("El procedimiento debe tener número de orden");
         }
 
-        medicalVisit.Procedure(patientId, date, procedureOrder);
+        medicalVisit.addProcedureOrder(procedureOrder);
     }
 }
-

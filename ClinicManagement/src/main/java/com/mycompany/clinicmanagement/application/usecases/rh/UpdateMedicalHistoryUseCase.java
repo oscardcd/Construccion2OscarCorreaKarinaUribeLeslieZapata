@@ -1,27 +1,32 @@
 package com.mycompany.clinicmanagement.application.usecases.rh;
-import java.time.LocalDate;
+
+import app.domain.models.MedicalRecord;
 import app.domain.models.MedicalVisit;
 
 public class UpdateMedicalHistoryUseCase {
 
-    private final MedicalVisit medicalVisit;
+    private final MedicalRecord medicalRecord;
 
-    public UpdateMedicalHistoryUseCase(MedicalVisit medicalVisit) {
-        this.medicalVisit = medicalVisit;
+    public UpdateMedicalHistoryUseCase(MedicalRecord medicalRecord) {
+        this.medicalRecord = medicalRecord;
     }
 
-    public void execute(String patientId, LocalDate date, String newDiagnosis, String newSymptoms) {
+    public void execute(String patientId, String date, String newDiagnosis, String newSymptoms) {
         if (patientId == null || patientId.isEmpty()) {
             throw new IllegalArgumentException("El Id del paciente es obligatorio");
         }
-        if (date == null) {
+        if (date == null || date.isEmpty()) {
             throw new IllegalArgumentException("La fecha de atención es obligatoria");
         }
-        // Valida que no se actualice a futuro
-        if (date.isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("La fecha no puede ser futura");
+
+        //Buscar la visita en el historial del paciente
+        MedicalVisit visit = medicalRecord.getVisitByDate(date);
+        if (visit == null) {
+            throw new IllegalArgumentException("No existe una visita registrada en esa fecha");
         }
 
-        medicalVisit.updateHistory(patientId, date, newDiagnosis, newSymptoms);
+        //Actualizar síntomas y diagnóstico
+        visit.setDiagnosis(newDiagnosis);
+        visit.setSymptoms(newSymptoms);
     }
 }

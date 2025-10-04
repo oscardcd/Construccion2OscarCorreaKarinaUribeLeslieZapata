@@ -1,9 +1,11 @@
 package app.domain.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MedicalVisit {
 
+    
     private String date;
     private String doctorId;
     private String reasonForVisit;
@@ -14,12 +16,14 @@ public class MedicalVisit {
     private List<ProcedureOrder> procedureOrders;
     private List<DiagnosticOrder> diagnosticOrders;
 
-    // Constructor
+    
+
+    // Constructor listas cargadas
     public MedicalVisit(String date, String doctorId, String reasonForVisit,
-            String symptoms, String diagnosis,
-            List<MedicationOrder> medicationOrders,
-            List<ProcedureOrder> procedureOrders,
-            List<DiagnosticOrder> diagnosticOrders) {
+                        String symptoms, String diagnosis,
+                        List<MedicationOrder> medicationOrders,
+                        List<ProcedureOrder> procedureOrders,
+                        List<DiagnosticOrder> diagnosticOrders) {
         this.date = date;
         this.doctorId = doctorId;
         this.reasonForVisit = reasonForVisit;
@@ -28,6 +32,33 @@ public class MedicalVisit {
         this.medicationOrders = medicationOrders;
         this.procedureOrders = procedureOrders;
         this.diagnosticOrders = diagnosticOrders;
+    }
+
+    // Constructor simplificado 
+    public MedicalVisit(String date, String doctorId, String reasonForVisit,
+                        String symptoms, String diagnosis) {
+        this.date = date;
+        this.doctorId = doctorId;
+        this.reasonForVisit = reasonForVisit;
+        this.symptoms = symptoms;
+        this.diagnosis = diagnosis;
+        this.medicationOrders = new ArrayList<>();
+        this.procedureOrders = new ArrayList<>();
+        this.diagnosticOrders = new ArrayList<>();
+    }
+
+    
+    //Métodos
+    public void addMedicationOrder(MedicationOrder order) {
+        this.medicationOrders.add(order);
+    }
+
+    public void addProcedureOrder(ProcedureOrder order) {
+        this.procedureOrders.add(order);
+    }
+
+    public void addDiagnosticOrder(DiagnosticOrder order) {
+        this.diagnosticOrders.add(order);
     }
 
     public String getDate() {
@@ -93,5 +124,4 @@ public class MedicalVisit {
     public void setDiagnosticOrders(List<DiagnosticOrder> diagnosticOrders) {
         this.diagnosticOrders = diagnosticOrders;
     }
-
 }
