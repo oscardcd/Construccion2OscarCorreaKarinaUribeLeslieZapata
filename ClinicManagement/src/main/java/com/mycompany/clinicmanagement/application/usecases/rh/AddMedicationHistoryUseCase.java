@@ -1,17 +1,26 @@
 package com.mycompany.clinicmanagement.application.usecases.rh;
+
 import app.domain.models.MedicalVisit;
-import app.domain.models.Medication;
+import app.domain.models.MedicationOrder;
 import java.time.LocalDate;
 
 public class AddMedicationHistoryUseCase {
-    private final Medication medication;
 
-    public AddMedicationHistoryUseCase(Medication med)) {
-        this.medication = medication;
+    private final MedicalVisit medicalVisit;
+
+    public AddMedicationHistoryUseCase(MedicalVisit medicalVisit) {
+        this.medicalVisit = medicalVisit;
     }
 
-    //Asocia un medicamento en la historia clínica en una fecha especifica
-    public void execute(String patientId, LocalDate date, Medication medication) {
-        medicalVisit.Medication(patientId, date, medication);
+    //asocia un medicamento en la historia clínica en una fecha específica
+    public void execute(String patientId, LocalDate date, MedicationOrder medicationOrder) {
+        if (medicationOrder == null) {
+            throw new IllegalArgumentException("El medicamento no puede ser nulo");
+        }
+        if (medicationOrder.getItemNumber() == 0) {
+            throw new IllegalArgumentException("El medicamento debe tener número de orden");
+        }
+
+        medicalVisit.addMedicationOrder(medicationOrder);
     }
 }
