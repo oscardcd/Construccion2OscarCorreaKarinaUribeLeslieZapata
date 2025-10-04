@@ -1,52 +1,33 @@
-package com.mycompany.clinicmanagement.domain.models;
+package com.mycompany.clinicmanagement.application.services;
+
 import app.domain.models.MedicalRecord;
 import app.domain.models.MedicalVisit;
-import java.util.List;
-import com.mycompany.clinicmanagement.application.usecases.rh.MedicalRecordUseCase;
-import com.mycompany.clinicmanagement.domain.models.User;
+import com.mycompany.clinicmanagement.application.usecases.rh.*;
 
-import java.time.LocalDate;
+import java.util.Collection;
 
 public class MedicalRecordService {
-    private final MedicalRecordUseCase useCase;
 
-    public MedicalRecordService(MedicalRecordUseCase useCase) {
-        this.useCase = useCase;
+    private final MedicalRecord medicalRecord;
+
+    public MedicalRecordService(MedicalRecord medicalRecord) {
+        this.medicalRecord = medicalRecord;
     }
 
-    public void registerMedicalRecord(User doctor, MedicalVisit record) {
-        if (doctor == null || !doctor.canCreateMedicalRecords()) {
-            throw new SecurityException("El usuario no tiene permisos para crear historia clínica.");
-        }
-        if (record.getDate().isEmpty(LocalDate.now())) {
-            throw new IllegalArgumentException("La fecha de la historia clínica no puede ser futura.");
-        }
-        if (record.getDiagnosticOrders() != null && !record.getDiagnosticOrders().isEmpty()) {
-            if ((record.getMedicationOrders() != null && !record.getMedicationOrders().isEmpty()) ||
-                (record.getProcedureOrders() != null && !record.getProcedureOrders().isEmpty())) {
-                throw new IllegalArgumentException("Si se registra una ayuda diagnóstica, no se pueden incluir medicamentos ni procedimientos en el mismo registro.");
-            }
-        }
-        useCase.createRecord(record);
+    public void createHistory(String doctorId, String date, String reason, String symptoms, String diagnosis) {
+        new CreateMedicalHistoryUseCase(medicalRecord)
+                .execute(doctorId, date, reason, symptoms, diagnosis);
     }
 
-    public MedicalRecord findMedicalRecord(String patientDocumentNumber, LocalDate date) {
-        return useCase.getRecord(patientDocumentNumber, date);
+    public void addVisit(String date, MedicalVisit visit) {
+        new Add(medicalRecord).execute(date, visit);
     }
 
-    public List<MedicalRecord> findAllMedicalRecords(String patientDocumentNumber) {
-        return useCase.getRecordsForPatient(patientDocumentNumber);
+    public void updateHistory(String date, String diagnosis, String symptoms) {
+        new UpdateMedicalHistoryUseCase(medicalRecord).execute(date, diagnosis, symptoms);
     }
 
-    public void updateMedicalRecord(User doctor, MedicalRecord updatedRecord) {
-        if (doctor == null || !doctor.canCreateMedicalRecords()) {
-            throw new SecurityException("El usuario no tiene permisos para actualizar historia clínica.");
-        }
-        // Reglas de negocio antes de actualizar (por ejemplo validar que exista)
-        MedicalRecord existing = useCase.getRecord(updatedRecord.getPatientId(), updatedRecord.getDate());
-        if (existing == null) {
-            throw new IllegalArgumentException("No existe una historia clínica en esa fecha para ese paciente.");
-        }
-        useCase.createRecord(updatedRecord); // en este diseño reusa save para actualizar
+    public Collection<MedicalVisit> getPatientHistory() {
+        return new GetPatientHistoryUseCase(medicalRecord).execute();
     }
 }
