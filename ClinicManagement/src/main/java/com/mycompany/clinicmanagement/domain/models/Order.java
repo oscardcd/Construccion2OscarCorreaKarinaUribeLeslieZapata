@@ -1,7 +1,9 @@
+package com.mycompany.clinicmanagement.domain.models;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class OrderService {
+public class Order {
     private String orderId;
     private String patientId;
     private String doctorId;
@@ -13,73 +15,31 @@ public class OrderService {
     private List<String> procedures;
     private String observations;
 
-    // Constructor privado
     private Order() {}
 
     public static class Builder {
-        private Order order;
+        private final Order order;
 
         public Builder() {
             this.order = new Order();
         }
 
-        public Builder orderId(String orderId) {
-            order.orderId = orderId;
-            return this;
-        }
+        public Builder orderId(String orderId) { order.orderId = orderId; return this; }
+        public Builder patientId(String patientId) { order.patientId = patientId; return this; }
+        public Builder doctorId(String doctorId) { order.doctorId = doctorId; return this; }
+        public Builder orderDate(LocalDateTime orderDate) { order.orderDate = orderDate; return this; }
+        public Builder orderType(String orderType) { order.orderType = orderType; return this; }
+        public Builder priority(String priority) { order.priority = priority; return this; }
+        public Builder status(String status) { order.status = status; return this; }
+        public Builder medications(List<String> medications) { order.medications = medications; return this; }
+        public Builder procedures(List<String> procedures) { order.procedures = procedures; return this; }
+        public Builder observations(String observations) { order.observations = observations; return this; }
 
-        public Builder patientId(String patientId) {
-            order.patientId = patientId;
-            return this;
-        }
-
-        public Builder doctorId(String doctorId) {
-            order.doctorId = doctorId;
-            return this;
-        }
-
-        public Builder orderDate(LocalDateTime orderDate) {
-            order.orderDate = orderDate;
-            return this;
-        }
-
-        public Builder orderType(String orderType) {
-            order.orderType = orderType;
-            return this;
-        }
-
-        public Builder priority(String priority) {
-            order.priority = priority;
-            return this;
-        }
-
-        public Builder status(String status) {
-            order.status = status;
-            return this;
-        }
-
-        public Builder medications(List<String> medications) {
-            order.medications = medications;
-            return this;
-        }
-
-        public Builder procedures(List<String> procedures) {
-            order.procedures = procedures;
-            return this;
-        }
-
-        public Builder observations(String observations) {
-            order.observations = observations;
-            return this;
-        }
-
-        public OrderService build() {
-            if (order.orderId == null || order.orderId.trim().isEmpty()) {
+        public Order build() {
+            if (order.orderId == null || order.orderId.trim().isEmpty())
                 throw new IllegalStateException("Order ID is required");
-            }
-            if (order.patientId == null || order.patientId.trim().isEmpty()) {
+            if (order.patientId == null || order.patientId.trim().isEmpty())
                 throw new IllegalStateException("Patient ID is required");
-            }
             return order;
         }
     }
