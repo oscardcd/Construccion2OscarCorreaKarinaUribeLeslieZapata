@@ -1,3 +1,4 @@
+//se realiza los adaptadores utiluizando una lista **ArrayList** Como almacenamiento temporal(En todas)
 package com.mycompany.clinicmanagement.infrastructure.adapters;
 
 import com.mycompany.clinicmanagement.domain.models.MedicalVisit;
