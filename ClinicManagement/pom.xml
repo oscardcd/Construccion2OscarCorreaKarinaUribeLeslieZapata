@@ -14,9 +14,15 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>17</maven.compiler.release>
-        <start-class>clinickol.clinicmanagement.ClinicManagement</start-class>
+        <start-class>clinickol.clinicmanagement.ClinicManagementApplication</start-class>
     </properties>
     <dependencies>
+        <!-- Spring Boot Web Starter -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        
         <!-- Spring Boot Data JPA Starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -50,7 +56,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>clinickol.clinicmanagement.ClinicManagement</mainClass>
+                    <mainClass>clinickol.clinicmanagement.ClinicManagementApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>
