@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Sistema de Gestión Clínica</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f7fa;
+      }
+
+      .navbar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-brand {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .navbar-user {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .user-info {
+        text-align: right;
+      }
+
+      .user-name {
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      .user-role {
+        font-size: 13px;
+        opacity: 0.9;
+      }
+
+      .btn-logout {
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .btn-logout:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+
+      .welcome-section {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      }
+
+      .welcome-section h1 {
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      .welcome-section p {
+        color: #666;
+        font-size: 16px;
+      }
+
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+      }
+
+      .dashboard-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+
+      .dashboard-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .card-icon {
+        font-size: 48px;
+        margin-bottom: 15px;
+      }
+
+      .card-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      .card-description {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .card-link {
+        display: inline-block;
+        margin-top: 15px;
+        color: #667eea;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 14px;
+      }
+
+      .card-link:hover {
+        text-decoration: underline;
+      }
+
+      .role-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        margin-top: 5px;
+      }
+
+      .role-recursos-humanos {
+        background: #e3f2fd;
+        color: #1976d2;
+      }
+      .role-personal-administrativo {
+        background: #f3e5f5;
+        color: #7b1fa2;
+      }
+      .role-soporte-informacion {
+        background: #fff3e0;
+        color: #e65100;
+      }
+      .role-enfermera {
+        background: #e8f5e9;
+        color: #2e7d32;
+      }
+      .role-medico {
+        background: #fce4ec;
+        color: #c2185b;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="navbar-brand">🏥 Sistema de Gestión Clínica</div>
+      <div class="navbar-user">
+        <div class="user-info">
+          <div class="user-name" id="userName"></div>
+          <div class="user-role" id="userRole"></div>
+        </div>
+        <button class="btn-logout" onclick="logout()">Cerrar Sesión</button>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="welcome-section">
+        <h1 id="welcomeTitle"></h1>
+        <p>Seleccione una opción del menú para comenzar a trabajar</p>
+      </div>
+
+      <div class="dashboard-grid" id="dashboardGrid">
+        <!-- Las tarjetas se generarán dinámicamente según el rol -->
+      </div>
+    </div>
+
+    <script>
+      // Verificar autenticación
+      const usuario = JSON.parse(localStorage.getItem("usuario"));
+
+      if (!usuario) {
+        window.location.href = "/login.html";
+      }
+
+      // Mostrar información del usuario
+      document.getElementById("userName").textContent = usuario.nombre;
+      document.getElementById("userRole").textContent = getRoleName(
+        usuario.rol
+      );
+      document.getElementById(
+        "welcomeTitle"
+      ).textContent = `¡Bienvenido/a, ${usuario.nombre}!`;
+
+      function getRoleName(rol) {
+        const roles = {
+          RECURSOS_HUMANOS: "Recursos Humanos",
+          PERSONAL_ADMINISTRATIVO: "Personal Administrativo",
+          SOPORTE_INFORMACION: "Soporte de Información",
+          ENFERMERA: "Enfermera",
+          MEDICO: "Médico",
+        };
+        return roles[rol] || rol;
+      }
+
+      function getRoleClass(rol) {
+        return "role-" + rol.toLowerCase().replace(/_/g, "-");
+      }
+
+      // Configurar tarjetas según el rol
+      function setupDashboard() {
+        const grid = document.getElementById("dashboardGrid");
+        let cards = [];
+
+        switch (usuario.rol) {
+          case "RECURSOS_HUMANOS":
+            cards = [
+              {
+                icon: "👥",
+                title: "Gestión de Empleados",
+                desc: "Crear, modificar y eliminar empleados del sistema",
+                url: "#",
+              },
+              {
+                icon: "📊",
+                title: "Reportes de Personal",
+                desc: "Ver estadísticas y reportes del personal",
+                url: "#",
+              },
+              {
+                icon: "📋",
+                title: "Gestión de Roles",
+                desc: "Administrar roles y permisos",
+                url: "#",
+              },
+            ];
+            break;
+
+          case "PERSONAL_ADMINISTRATIVO":
+            cards = [
+              {
+                icon: "🏥",
+                title: "Registrar Paciente",
+                desc: "Registrar nuevos pacientes en el sistema",
+                url: "#",
+              },
+              {
+                icon: "📅",
+                title: "Agendar Citas",
+                desc: "Programar citas médicas",
+                url: "#",
+              },
+              {
+                icon: "💰",
+                title: "Facturación",
+                desc: "Generar facturas y gestionar pagos",
+                url: "#",
+              },
+              {
+                icon: "📄",
+                title: "Ver Pacientes",
+                desc: "Consultar información de pacientes",
+                url: "#",
+              },
+            ];
+            break;
+
+          case "SOPORTE_INFORMACION":
+            cards = [
+              {
+                icon: "💊",
+                title: "Inventario Medicamentos",
+                desc: "Gestionar medicamentos disponibles",
+                url: "#",
+              },
+              {
+                icon: "🔬",
+                title: "Procedimientos",
+                desc: "Administrar procedimientos médicos",
+                url: "#",
+              },
+              {
+                icon: "🧪",
+                title: "Ayudas Diagnósticas",
+                desc: "Gestionar exámenes y ayudas",
+                url: "#",
+              },
+              {
+                icon: "⚕️",
+                title: "Especialidades",
+                desc: "Administrar especialidades médicas",
+                url: "#",
+              },
+            ];
+            break;
+
+          case "ENFERMERA":
+            cards = [
+              {
+                icon: "📝",
+                title: "Registro de Visitas",
+                desc: "Registrar signos vitales de pacientes",
+                url: "#",
+              },
+              {
+                icon: "💉",
+                title: "Administrar Medicamentos",
+                desc: "Registrar medicamentos aplicados",
+                url: "#",
+              },
+              {
+                icon: "🏥",
+                title: "Ver Pacientes",
+                desc: "Consultar información de pacientes",
+                url: "#",
+              },
+            ];
+            break;
+
+          case "MEDICO":
+            cards = [
+              {
+                icon: "📋",
+                title: "Historia Clínica",
+                desc: "Consultar y actualizar historias clínicas",
+                url: "#",
+              },
+              {
+                icon: "📝",
+                title: "Crear Órdenes",
+                desc: "Generar órdenes médicas",
+                url: "#",
+              },
+              {
+                icon: "🔍",
+                title: "Ver Pacientes",
+                desc: "Consultar pacientes asignados",
+                url: "#",
+              },
+              {
+                icon: "💊",
+                title: "Recetar Medicamentos",
+                desc: "Prescribir medicamentos",
+                url: "#",
+              },
+            ];
+            break;
+
+          default:
+            cards = [
+              {
+                icon: "❌",
+                title: "Sin Acceso",
+                desc: "No tiene permisos asignados",
+                url: "#",
+              },
+            ];
+        }
+
+        grid.innerHTML = cards
+          .map(
+            (card) => `
+                <div class="dashboard-card" onclick="navigateTo('${card.url}')">
+                    <div class="card-icon">${card.icon}</div>
+                    <div class="card-title">${card.title}</div>
+                    <div class="card-description">${card.desc}</div>
+                    <span class="role-badge ${getRoleClass(
+                      usuario.rol
+                    )}">${getRoleName(usuario.rol)}</span>
+                </div>
+            `
+          )
+          .join("");
+      }
+
+      function navigateTo(url) {
+        if (url === "#") {
+          alert("Esta funcionalidad estará disponible próximamente");
+        } else {
+          window.location.href = url;
+        }
+      }
+
+      function logout() {
+        if (confirm("¿Está seguro que desea cerrar sesión?")) {
+          localStorage.removeItem("usuario");
+          window.location.href = "/login.html";
+        }
+      }
+
+      // Inicializar dashboard
+      setupDashboard();
+    </script>
+  </body>
+</html>
