@@ -1,92 +1,152 @@
 package app.domain.models;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import java.io.Serializable;
+import java.util.Objects;
 
+@Entity
+@Table(name = "ordenes_procedimientos")
+@IdClass(ProcedureOrder.OrdenProcedimientoId.class)
 public class ProcedureOrder {
 
-    private String orderId;
-    private String patientId;
-    private String doctorId;
-    private String creationDate;
+    @Id
+    @Column(name = "numero_orden", length = 6)
+    private String numeroOrden;
 
-    private long itemNumber;
+    @Id
+    @Column(name = "numero_item")
+    private Integer numeroItem;
+
+    @ManyToOne
+    @JoinColumn(name = "numero_orden", insertable = false, updatable = false)
+    private DiagnosticOrder diagnosticOrder;
+
+    @NotBlank
+    @Column(name = "nombre_procedimiento", nullable = false)
     private String procedureName;
-    private long quantity;
+
+    @NotNull
+    @Min(1)
+    @Column(name = "numero_veces", nullable = false)
+    private Integer numeroVeces;
+
+    @NotBlank
+    @Column(name = "frecuencia", nullable = false)
     private String frequency;
-    private boolean requiresSpecialist;
-    private String specialistId;
-    private double cost;
 
-    public ProcedureOrder(String orderId, String patientId, String doctorId,
-            String creationDate, int itemNumber, String procedureName,
-            int quantity, String frequency, boolean requiresSpecialist,
-            String specialistId, double cost) {
-        this.orderId = orderId;
-        this.patientId = patientId;
-        this.doctorId = doctorId;
-        this.creationDate = creationDate;
-        this.itemNumber = itemNumber;
-        this.procedureName = procedureName;
-        this.quantity = quantity;
-        this.frequency = frequency;
-        this.requiresSpecialist = requiresSpecialist;
-        this.specialistId = specialistId;
-        this.cost = cost;
+    @NotNull
+    @DecimalMin("0.0")
+    @Column(name = "costo", nullable = false)
+    private Double costo;
+
+    @Column(name = "requiere_especialista", nullable = false)
+    private boolean requiereEspecialista = false;
+
+    @ManyToOne
+    @JoinColumn(name = "especialidad_id")
+    private Specialty specialty;
+
+    public DiagnosticOrder() {
     }
 
-    public long getItemNumber() {
-        return itemNumber;
+    public String getNumeroOrden() {
+        return numeroOrden;
     }
 
-    public void setItemNumber(long itemNumber) {
-        this.itemNumber = itemNumber;
+    public void setNumeroOrden(String numeroOrden) {
+        this.numeroOrden = numeroOrden;
+    }
+
+    public Integer getNumeroItem() {
+        return numeroItem;
+    }
+
+    public void setNumeroItem(Integer numeroItem) {
+        this.numeroItem = numeroItem;
+    }
+
+    public DiagnosticOrder getDiagnosticOrder() {
+        return diagnosticOrder;
+    }
+
+    public void setDiagnosticOrder(DiagnosticOrder diagnosticOrder) {
+        this.diagnosticOrder = diagnosticOrder;
     }
 
     public String getProcedureName() {
         return procedureName;
     }
 
-    public void setProcedureName(String procedureName) {
+    public void setProcedureName(String ProcedureName) {
         this.procedureName = procedureName;
     }
 
-    public long getQuantity() {
-        return quantity;
+    public Integer getNumeroVeces() {
+        return numeroVeces;
     }
 
-    public void setQuantity(long quantity) {
-        this.quantity = quantity;
+    public void setNumeroVeces(Integer numeroVeces) {
+        this.numeroVeces = numeroVeces;
     }
 
     public String getFrequency() {
         return frequency;
     }
 
-    public void setFrequency(String frequency) {
-        this.frequency = frequency;
+    public void setFrequency(String frecuencia) {
+        this.frequency = frecuencia;
     }
 
-    public boolean isRequiresSpecialist() {
-        return requiresSpecialist;
+    public Double getCosto() {
+        return costo;
     }
 
-    public void setRequiresSpecialist(boolean requiresSpecialist) {
-        this.requiresSpecialist = requiresSpecialist;
+    public void setCosto(Double costo) {
+        this.costo = costo;
     }
 
-    public String getSpecialistId() {
-        return specialistId;
+    public boolean isRequiereEspecialista() {
+        return requiereEspecialista;
     }
 
-    public void setSpecialistId(String specialistId) {
-        this.specialistId = specialistId;
+    public void setRequiereEspecialista(boolean requiereEspecialista) {
+        this.requiereEspecialista = requiereEspecialista;
     }
 
-    public double getCost() {
-        return cost;
+    public Specialty getSpecialty() {
+        return specialty;
     }
 
-    public void setCost(double cost) {
-        this.cost = cost;
+    public void setEspecialidad(Specialty Specialty) {
+        this.specialty = Specialty;
     }
 
+    public static class OrdenProcedimientoId implements Serializable {
+        private String numeroOrden;
+        private Integer numeroItem;
+
+        public OrdenProcedimientoId() {
+        }
+
+        public OrdenProcedimientoId(String numeroOrden, Integer numeroItem) {
+            this.numeroOrden = numeroOrden;
+            this.numeroItem = numeroItem;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o)
+                return true;
+            if (o == null || getClass() != o.getClass())
+                return false;
+            OrdenProcedimientoId that = (OrdenProcedimientoId) o;
+            return Objects.equals(numeroOrden, that.numeroOrden) && Objects.equals(numeroItem, that.numeroItem);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(numeroOrden, numeroItem);
+        }
+    }
 }

@@ -1,79 +1,134 @@
 package app.domain.models;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+@Entity
+@Table(name = "ordenes")
 public class DiagnosticOrder {
 
-    private String orderId;
-    private String patientId;
-    private String doctorId;
-    private String creationDate;
-    private long itemNumber;
-    private String examName;
-    private long quantity;
-    private double cost;
-    private boolean requiresSpecialist;
-    private String specialistId;
+    @Id
+    @Column(name = "id_orden", length = 6)
+    @Pattern(regexp = "\\d{1,6}")
+    private String idOrden;
 
-    public DiagnosticOrder(String orderId, String patientId, String doctorId,
-            String creationDate, int itemNumber,
-            String examName, int quantity, double cost,
-            boolean requiresSpecialist, String specialistId) {
-        this.orderId = orderId;
-        this.patientId = patientId;
-        this.doctorId = doctorId;
-        this.creationDate = creationDate;
-        this.itemNumber = itemNumber;
-        this.examName = examName;
-        this.quantity = quantity;
-        this.cost = cost;
-        this.requiresSpecialist = requiresSpecialist;
-        this.specialistId = specialistId;
+    @NotBlank
+    @Column(name = "cedula_paciente", nullable = false, length = 10)
+    private String cedulaPaciente;
+
+    @NotBlank
+    @Column(name = "cedula_medico", nullable = false, length = 10)
+    private String cedulaMedico;
+
+    @NotNull
+    @Column(name = "fecha_creacion", nullable = false)
+    private LocalDateTime fechaCreacion;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_orden", nullable = false)
+    private OrderType OrderType;
+
+    @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MedicationOrder> medicamentos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProcedureOrder> procedimientos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrdenAyudaDiagnostica> ayudasDiagnosticas = new ArrayList<>();
+
+    @Column(name = "total")
+    private Double total = 0.0;
+
+    public DiagnosticOrder() {
+        this.fechaCreacion = LocalDateTime.now();
     }
 
-    public long getItemNumber() {
-        return itemNumber;
+    public void calcularTotal() {
+        double sum = 0.0;
+        for (MedicationOrder om : medicamentos) {
+            sum += om.getCosto();
+        }
+        for (ProcedureOrder op : procedimientos) {
+            sum += op.getCosto();
+        }
+        for (OrdenAyudaDiagnostica oa : ayudasDiagnosticas) {
+            sum += oa.getCosto();
+        }
+        this.total = sum;
     }
 
-    public void setItemNumber(long itemNumber) {
-        this.itemNumber = itemNumber;
+    public String getNumeroOrden() {
+        return numeroOrden;
     }
 
-    public String getExamName() {
-        return examName;
+    public void setNumeroOrden(String numeroOrden) {
+        this.numeroOrden = numeroOrden;
     }
 
-    public void setExamName(String examName) {
-        this.examName = examName;
+    public String getCedulaPaciente() {
+        return cedulaPaciente;
     }
 
-    public long getQuantity() {
-        return quantity;
+    public void setCedulaPaciente(String cedulaPaciente) {
+        this.cedulaPaciente = cedulaPaciente;
     }
 
-    public void setQuantity(long quantity) {
-        this.quantity = quantity;
+    public String getCedulaMedico() {
+        return cedulaMedico;
     }
 
-    public double getCost() {
-        return cost;
+    public void setCedulaMedico(String cedulaMedico) {
+        this.cedulaMedico = cedulaMedico;
     }
 
-    public void setCost(double cost) {
-        this.cost = cost;
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public boolean isRequiresSpecialist() {
-        return requiresSpecialist;
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
-    public void setRequiresSpecialist(boolean requiresSpecialist) {
-        this.requiresSpecialist = requiresSpecialist;
+    public OrderType getTipoOrdenOrderType() {
+        return OrderType;
     }
 
-    public String getSpecialistId() {
-        return specialistId;
+    public void setOrderType(OrderType OrderType) {
+        this.OrderType = OrderType;
     }
 
-    public void setSpecialistId(String specialistId) {
-        this.specialistId = specialistId;
+    public List<MedicationOrder> getMedicationOrders() {
+        return medicamentos;
+    }
+
+    public void setMedicamentos(List<MedicationOrder> medicamentos) {
+        this.medicamentos = medicamentos;
+    }
+
+    public List<ProcedureOrder> getProcedimientos() {
+        return procedimientos;
+    }
+
+    public void setProcedimientos(List<ProcedureOrder> procedimientos) {
+        this.procedimientos = procedimientos;
+    }
+
+    public List<OrdenAyudaDiagnostica> getAyudasDiagnosticas() {
+        return ayudasDiagnosticas;
+    }
+
+    public void setAyudasDiagnosticas(List<OrdenAyudaDiagnostica> ayudasDiagnosticas) {
+        this.ayudasDiagnosticas = ayudasDiagnosticas;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
     }
 }

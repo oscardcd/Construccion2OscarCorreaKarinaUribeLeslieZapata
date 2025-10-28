@@ -1,78 +1,93 @@
 package app.domain.models;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
+@Entity
+@Table(name = "procedimientos")
 public class Procedure {
 
-    private String procedureId;
-    private String name;
-    private int repetitions;
-    private String frequency;
-    private double cost;
-    private boolean requiresSpecialist;
-    private String specialistType;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public Procedure(String procedureId, String name, int repetitions, String frequency, double cost, boolean requiresSpecialist, String specialistType) {
-        this.procedureId = procedureId;
-        this.name = name;
-        this.repetitions = repetitions;
-        this.frequency = frequency;
-        this.cost = cost;
-        this.requiresSpecialist = requiresSpecialist;
-        this.specialistType = specialistType;
+    @NotBlank
+    @Column(nullable = false)
+    private String nombre;
+
+    @Column(length = 1000)
+    private String descripcion;
+
+    @NotNull
+    @DecimalMin("0.0")
+    @Column(nullable = false)
+    private Double costo;
+
+    @Column(nullable = false)
+    private boolean requiereEspecialista = false;
+
+    @ManyToOne
+    @JoinColumn(name = "especialidad_id")
+    private Specialty RequiredSpecialty;
+
+    @Column(nullable = false)
+    private boolean activo = true;
+
+    public Procedure() {
     }
 
-    public String getProcedureId() {
-        return procedureId;
+    public Long getId() {
+        return id;
     }
 
-    public void setProcedureId(String procedureId) {
-        this.procedureId = procedureId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public int getRepetitions() {
-        return repetitions;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setRepetitions(int repetitions) {
-        this.repetitions = repetitions;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public String getFrequency() {
-        return frequency;
+    public Double getCosto() {
+        return costo;
     }
 
-    public void setFrequency(String frequency) {
-        this.frequency = frequency;
+    public void setCosto(Double costo) {
+        this.costo = costo;
     }
 
-    public double getCost() {
-        return cost;
+    public boolean isRequiereEspecialista() {
+        return requiereEspecialista;
     }
 
-    public void setCost(double cost) {
-        this.cost = cost;
+    public void setRequiereEspecialista(boolean requiereEspecialista) {
+        this.requiereEspecialista = requiereEspecialista;
     }
 
-    public boolean isRequiresSpecialist() {
-        return requiresSpecialist;
+    public Specialty getRequiredSpecialty() {
+        return RequiredSpecialty;
     }
 
-    public void setRequiresSpecialist(boolean requiresSpecialist) {
-        this.requiresSpecialist = requiresSpecialist;
+    public void setRequiredSpecialty(Specialty RequiredSpecialty) {
+        this.RequiredSpecialty = RequiredSpecialty;
     }
 
-    public String getSpecialistType() {
-        return specialistType;
+    public boolean isActivo() {
+        return activo;
     }
 
-    public void setSpecialistType(String specialistType) {
-        this.specialistType = specialistType;
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }
