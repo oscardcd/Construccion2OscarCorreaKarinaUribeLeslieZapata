@@ -19,12 +19,11 @@ public class MedicamentoController {
     public MedicamentoController(MedicamentoService medicamentoService) {
         this.medicamentoService = medicamentoService;
     }
-/*
- *  @PostMapping
+  @PostMapping
     public ResponseEntity<Medicamento> crear(@Valid @RequestBody Medicamento medicamento) {
         return ResponseEntity.status(HttpStatus.CREATED).body(medicamentoService.crear(medicamento));
     }
- */
+
    
 
     @GetMapping
