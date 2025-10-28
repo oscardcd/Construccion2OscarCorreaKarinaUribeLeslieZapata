@@ -17,7 +17,7 @@ public class MedicamentoService {
     public MedicamentoService(MedicamentoRepository medicamentoRepository) {
         this.medicamentoRepository = medicamentoRepository;
     }
-
+/*for update */
     public Medicamento crear(Medicamento medicamento) {
         return medicamentoRepository.save(medicamento);
     }
