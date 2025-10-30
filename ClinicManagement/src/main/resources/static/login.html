@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Sistema de Gestión Clínica</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .login-container {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        max-width: 400px;
+        width: 100%;
+      }
+
+      .login-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 40px 20px;
+        text-align: center;
+        color: white;
+      }
+
+      .login-header h1 {
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+
+      .login-header p {
+        font-size: 14px;
+        opacity: 0.9;
+      }
+
+      .login-icon {
+        font-size: 60px;
+        margin-bottom: 20px;
+      }
+
+      .login-form {
+        padding: 40px 30px;
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      .form-group input::placeholder {
+        color: #999;
+      }
+
+      .btn-login {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+      }
+
+      .btn-login:active {
+        transform: translateY(0);
+      }
+
+      .btn-login:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .alert {
+        padding: 12px 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-size: 14px;
+        display: none;
+      }
+
+      .alert-error {
+        background-color: #fee;
+        color: #c33;
+        border: 1px solid #fcc;
+      }
+
+      .alert-success {
+        background-color: #efe;
+        color: #3c3;
+        border: 1px solid #cfc;
+      }
+
+      .alert-info {
+        background-color: #eef;
+        color: #33c;
+        border: 1px solid #ccf;
+      }
+
+      .login-footer {
+        padding: 20px 30px;
+        background-color: #f8f9fa;
+        text-align: center;
+        font-size: 13px;
+        color: #666;
+      }
+
+      .role-select {
+        margin-top: 15px;
+      }
+
+      .spinner {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 0.8s linear infinite;
+        margin-right: 8px;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .demo-credentials {
+        background-color: #fff3cd;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 20px;
+        font-size: 13px;
+      }
+
+      .demo-credentials h4 {
+        color: #856404;
+        margin-bottom: 10px;
+      }
+
+      .demo-credentials p {
+        color: #856404;
+        margin: 5px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="login-header">
+        <div class="login-icon">🏥</div>
+        <h1>Sistema de Gestión Clínica</h1>
+        <p>Ingrese sus credenciales</p>
+      </div>
+
+      <div class="login-form">
+        <div id="alert" class="alert"></div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="cedula">Cédula</label>
+            <input
+              type="text"
+              id="cedula"
+              name="cedula"
+              placeholder="Ingrese su número de cédula"
+              required
+              maxlength="10"
+              pattern="[0-9]{1,10}"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Ingrese su contraseña"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn-login" id="btnLogin">
+            Iniciar Sesión
+          </button>
+        </form>
+
+        <div class="demo-credentials">
+          <h4>⚠️ Credenciales de Prueba</h4>
+          <p>
+            <strong>Nota:</strong> Primero debe crear un empleado usando la API
+          </p>
+          <p>Endpoint: POST /api/empleados</p>
+        </div>
+      </div>
+
+      <div class="login-footer">
+        <p>Sistema de Gestión Clínica v1.0</p>
+        <p>© 2024 - Todos los derechos reservados</p>
+      </div>
+    </div>
+
+    <script>
+      const API_BASE_URL = "http://localhost:8080/api";
+      const form = document.getElementById("loginForm");
+      const btnLogin = document.getElementById("btnLogin");
+      const alertDiv = document.getElementById("alert");
+
+      // Función para mostrar alertas
+      function showAlert(message, type = "error") {
+        alertDiv.textContent = message;
+        alertDiv.className = `alert alert-${type}`;
+        alertDiv.style.display = "block";
+
+        setTimeout(() => {
+          alertDiv.style.display = "none";
+        }, 5000);
+      }
+
+      // Función para mostrar spinner en botón
+      function setLoading(loading) {
+        if (loading) {
+          btnLogin.disabled = true;
+          btnLogin.innerHTML = '<span class="spinner"></span>Verificando...';
+        } else {
+          btnLogin.disabled = false;
+          btnLogin.innerHTML = "Iniciar Sesión";
+        }
+      }
+
+      // Manejar envío del formulario
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const cedula = document.getElementById("cedula").value.trim();
+        const password = document.getElementById("password").value;
+
+        if (!cedula || !password) {
+          showAlert("Por favor complete todos los campos", "error");
+          return;
+        }
+
+        setLoading(true);
+
+        try {
+          // Buscar empleado por cédula
+          const response = await fetch(
+            `${API_BASE_URL}/empleados/cedula/${cedula}`
+          );
+
+          if (!response.ok) {
+            if (response.status === 404) {
+              showAlert(
+                "Cédula no encontrada. Verifique sus credenciales.",
+                "error"
+              );
+            } else {
+              showAlert("Error al conectar con el servidor", "error");
+            }
+            setLoading(false);
+            return;
+          }
+
+          const empleado = await response.json();
+
+          // Verificar contraseña (en producción esto debería hacerse en el backend)
+          if (empleado.contrasena === password) {
+            // Login exitoso
+            showAlert("¡Login exitoso! Redirigiendo...", "success");
+
+            // Guardar datos del usuario en localStorage
+            localStorage.setItem(
+              "usuario",
+              JSON.stringify({
+                id: empleado.id,
+                nombre: empleado.nombreCompleto,
+                cedula: empleado.cedula,
+                rol: empleado.rol,
+                email: empleado.correoElectronico,
+              })
+            );
+
+            // Redirigir según el rol
+            setTimeout(() => {
+              window.location.href = "/dashboard.html";
+            }, 1500);
+          } else {
+            showAlert("Contraseña incorrecta", "error");
+            setLoading(false);
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          showAlert(
+            "Error de conexión. Verifique que el servidor esté ejecutándose.",
+            "error"
+          );
+          setLoading(false);
+        }
+      });
+
+      // Validar solo números en cédula
+      document.getElementById("cedula").addEventListener("input", (e) => {
+        e.target.value = e.target.value.replace(/[^0-9]/g, "");
+      });
+
+      // Verificar si ya hay sesión activa
+      window.addEventListener("load", () => {
+        const usuario = localStorage.getItem("usuario");
+        if (usuario) {
+          showAlert("Ya tiene una sesión activa. Redirigiendo...", "info");
+          setTimeout(() => {
+            window.location.href = "/dashboard.html";
+          }, 1500);
+        }
+      });
+    </script>
+  </body>
+</html>
