@@ -5,7 +5,7 @@ import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "medicamentos")
-public class Medicamento {
+public class Medication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class Medicamento {
     @Column(nullable = false)
     private boolean activo = true;
 
-    public Medicamento() {
+    public Medication() {
     }
 
     public Long getId() {

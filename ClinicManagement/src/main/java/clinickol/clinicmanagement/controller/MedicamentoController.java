@@ -1,6 +1,6 @@
 package clinickol.clinicmanagement.controller;
 
-import clinickol.clinicmanagement.domain.model.Medicamento;
+import clinickol.clinicmanagement.domain.model.Medication;
 import clinickol.clinicmanagement.service.MedicamentoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -21,12 +21,12 @@ public class MedicamentoController {
     }
 
     @PostMapping
-    public ResponseEntity<Medicamento> crear(@Valid @RequestBody Medicamento medicamento) {
+    public ResponseEntity<Medication> crear(@Valid @RequestBody Medication medicamento) {
         return ResponseEntity.status(HttpStatus.CREATED).body(medicamentoService.crear(medicamento));
     }
 
     @GetMapping
-    public ResponseEntity<List<Medicamento>> obtenerTodos() {
+    public ResponseEntity<List<Medication>> obtenerTodos() {
         return ResponseEntity.ok(medicamentoService.obtenerTodos());
     }
 
@@ -38,17 +38,17 @@ public class MedicamentoController {
     }
 
     @GetMapping("/activos")
-    public ResponseEntity<List<Medicamento>> obtenerActivos() {
+    public ResponseEntity<List<Medication>> obtenerActivos() {
         return ResponseEntity.ok(medicamentoService.obtenerActivos());
     }
 
     @GetMapping("/buscar")
-    public ResponseEntity<List<Medicamento>> buscarPorNombre(@RequestParam String nombre) {
+    public ResponseEntity<List<Medication>> buscarPorNombre(@RequestParam String nombre) {
         return ResponseEntity.ok(medicamentoService.buscarPorNombre(nombre));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> actualizar(@PathVariable Long id, @Valid @RequestBody Medicamento medicamento) {
+    public ResponseEntity<?> actualizar(@PathVariable Long id, @Valid @RequestBody Medication medicamento) {
         try {
             return ResponseEntity.ok(medicamentoService.actualizar(id, medicamento));
         } catch (RuntimeException e) {
