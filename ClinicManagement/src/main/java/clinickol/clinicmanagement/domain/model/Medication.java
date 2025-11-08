@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 @Entity
-@Table(name = "medicamentos")
+@Table(name = "medications")
 public class Medication {
 
     @Id
@@ -13,21 +13,21 @@ public class Medication {
 
     @NotBlank
     @Column(nullable = false)
-    private String nombre;
+    private String name;
 
     @Column(length = 1000)
-    private String descripcion;
+    private String description;
 
     @NotNull
     @DecimalMin("0.0")
     @Column(nullable = false)
-    private Double costo;
+    private Double cost;
 
     @Column(nullable = false)
     private Integer stock = 0;
 
     @Column(nullable = false)
-    private boolean activo = true;
+    private boolean active = true;
 
     public Medication() {
     }
@@ -40,28 +40,28 @@ public class Medication {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Double getCosto() {
-        return costo;
+    public Double getCost() {
+        return cost;
     }
 
-    public void setCosto(Double costo) {
-        this.costo = costo;
+    public void setCost(Double cost) {
+        this.cost = cost;
     }
 
     public Integer getStock() {
@@ -72,11 +72,11 @@ public class Medication {
         this.stock = stock;
     }
 
-    public boolean isActivo() {
-        return activo;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setActivo(boolean activo) {
-        this.activo = activo;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/inventario/medication")
+@RequestMapping("/api/inventarY/medicationS")
 @CrossOrigin(origins = "*")
 public class MedicationController {
 
@@ -22,35 +22,35 @@ public class MedicationController {
 
     @PostMapping
     public ResponseEntity<Medication> crear(@Valid @RequestBody Medication medication) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(medicationService.crear(medication));
+        return ResponseEntity.status(HttpStatus.CREATED).body(medicationService.create(medication));
     }
 
     @GetMapping
     public ResponseEntity<List<Medication>> obtenerTodos() {
-        return ResponseEntity.ok(medicationService.obtenerTodos());
+        return ResponseEntity.ok(medicationService.getAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
-        return medicamentoService.obtenerPorId(id)
+    public ResponseEntity<?> getById(@PathVariable Long id) {
+        return medicationService.getById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/activos")
-    public ResponseEntity<List<Medication>> obtenerActivos() {
-        return ResponseEntity.ok(medicamentoService.obtenerActivos());
+    @GetMapping("/active")
+    public ResponseEntity<Object> getActive() {
+        return ResponseEntity.ok(medicationService.getActive());
     }
 
-    @GetMapping("/buscar")
-    public ResponseEntity<List<Medication>> buscarPorNombre(@RequestParam String nombre) {
-        return ResponseEntity.ok(medicamentoService.buscarPorNombre(nombre));
+    @GetMapping("/search")
+    public ResponseEntity<List<Medication>> searchByName(@RequestParam String name) {
+        return ResponseEntity.ok(medicationService.searchByName(name));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> actualizar(@PathVariable Long id, @Valid @RequestBody Medication medicamento) {
+    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody Medication medicamento) {
         try {
-            return ResponseEntity.ok(medicamentoService.actualizar(id, medicamento));
+            return ResponseEntity.ok(medicationService.update(id, medicamento));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -58,7 +58,7 @@ public class MedicationController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
-        medicamentoService.eliminar(id);
+        medicationService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

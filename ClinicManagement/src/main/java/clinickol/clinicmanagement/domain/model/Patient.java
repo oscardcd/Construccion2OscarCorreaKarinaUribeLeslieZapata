@@ -7,51 +7,51 @@ import java.time.LocalDate;
 import java.time.Period;
 
 @Entity
-@Table(name = "pacientes")
-public class Paciente {
+@Table(name = "patients")
+public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idLong;
 
     @NotBlank
     @Column(unique = true, nullable = false, length = 10)
-    private String cedula;
+    private String id;
 
     @NotBlank
     @Column(nullable = false)
-    private String nombreCompleto;
+    private String fullName;
 
     @Past
     @NotNull
     @Column(nullable = false)
-    private LocalDate fechaNacimiento;
+    private LocalDate birthDate;
 
     @Enumerated(EnumType.STRING)
     @NotNull
     @Column(nullable = false)
-    private Gender genero;
+    private Gender gender;
 
     @NotBlank
     @Column(nullable = false)
-    private String direccion;
+    private String adress;
 
     @NotBlank
     @Pattern(regexp = "\\d{10}")
     @Column(length = 10, nullable = false)
-    private String telefono;
+    private String phoneNumber;
 
     @Email
     @Column(nullable = true)
-    private String correoElectronico;
+    private String email;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "contacto_emergencia_id")
-    private ContactoEmergencia contactoEmergencia;
+    private EmergencyContact emergencyContact;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "seguro_medico_id")
-    private SeguroMedico seguroMedico;
+    private HealthInsurance healthInsurance;
 
     @Column(nullable = false)
     private boolean activo = true;
@@ -59,25 +59,25 @@ public class Paciente {
     @Column(name = "copago_anual_acumulado")
     private Double copagoAnualAcumulado = 0.0;
 
-    @Column(name = "ano_copago_actual")
-    private Integer anoCopagoActual;
+    @Column(name = "annual_copay_accumulated")
+    private Integer annualCopayAccumulated;
 
-    public Paciente() {
-        this.anoCopagoActual = LocalDate.now().getYear();
+    public Patient() {
+        this.annualCopayAccumulated = LocalDate.now().getYear();
     }
 
-    public int getEdad() {
-        if (fechaNacimiento == null) {
+    public int getAge() {
+        if (birthDate == null) {
             return 0;
         }
-        return Period.between(fechaNacimiento, LocalDate.now()).getYears();
+        return Period.between(birthDate), LocalDate.now()).getYears();
     }
 
-    public void reiniciarCopagoSiEsNuevoAno() {
+    public void resetCopayIfNewYear() {
         int anoActual = LocalDate.now().getYear();
-        if (this.anoCopagoActual != anoActual) {
-            this.copagoAnualAcumulado = 0.0;
-            this.anoCopagoActual = anoActual;
+        if (this.currentCopayYear != currentYear) {
+            this.annualCopayAccumulated = 0.0;
+            this.currentCopayYear = currentYear;
         }
     }
 
@@ -97,36 +97,36 @@ public class Paciente {
         this.cedula = cedula;
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
+    public void setfullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public LocalDate getFechaNacimiento() {
-        return fechaNacimiento;
+    public LocalDate getbirthDate() {
+        return birthDate;
     }
 
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
+    public void setbirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
-    public Gender getGenero() {
-        return genero;
+    public Gender getGender() {
+        return gender;
     }
 
-    public void setGenero(Gender genero) {
-        this.genero = genero;
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String getAdress() {
+        return adress;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setAdress(String adress) {
+        this.adress = adress;
     }
 
     public String getTelefono() {
@@ -137,12 +137,12 @@ public class Paciente {
         this.telefono = telefono;
     }
 
-    public String getCorreoElectronico() {
-        return correoElectronico;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
+    public void setEmail(String Email) {
+        this.email = email;
     }
 
     public ContactoEmergencia getContactoEmergencia() {
@@ -153,12 +153,12 @@ public class Paciente {
         this.contactoEmergencia = contactoEmergencia;
     }
 
-    public SeguroMedico getSeguroMedico() {
-        return seguroMedico;
+    public HealthInsurance gethealthInsurance() {
+        return healthInsurance;
     }
 
-    public void setSeguroMedico(SeguroMedico seguroMedico) {
-        this.seguroMedico = seguroMedico;
+    public void setHealthInsurance (HealthInsurance healthInsurance) {
+        this.healthInsurance = healthInsurance;
     }
 
     public boolean isActivo() {
