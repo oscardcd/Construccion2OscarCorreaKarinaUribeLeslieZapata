@@ -1,7 +1,7 @@
 package clinickol.clinicmanagement.controller;
 
 import clinickol.clinicmanagement.domain.model.Medication;
-import clinickol.clinicmanagement.service.MedicamentoService;
+import clinickol.clinicmanagement.service.MedicationService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,24 +10,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/inventario/medicamentos")
+@RequestMapping("/api/inventario/medication")
 @CrossOrigin(origins = "*")
-public class MedicamentoController {
+public class MedicationController {
 
-    private final MedicamentoService medicamentoService;
+    private final MedicationService medicationService;
 
-    public MedicamentoController(MedicamentoService medicamentoService) {
-        this.medicamentoService = medicamentoService;
+    public MedicationController(MedicationService medicationService) {
+        this.medicationService = medicationService;
     }
 
     @PostMapping
-    public ResponseEntity<Medication> crear(@Valid @RequestBody Medication medicamento) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(medicamentoService.crear(medicamento));
+    public ResponseEntity<Medication> crear(@Valid @RequestBody Medication medication) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(medicationService.crear(medication));
     }
 
     @GetMapping
     public ResponseEntity<List<Medication>> obtenerTodos() {
-        return ResponseEntity.ok(medicamentoService.obtenerTodos());
+        return ResponseEntity.ok(medicationService.obtenerTodos());
     }
 
     @GetMapping("/{id}")
