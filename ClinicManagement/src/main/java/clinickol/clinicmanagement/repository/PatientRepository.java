@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PacienteRepository extends JpaRepository<Paciente, Long> {
+public interface PatientRepository extends JpaRepository<Paciente, Long> {
     Optional<Paciente> findByCedula(String cedula);
 
     List<Paciente> findByActivoTrue();

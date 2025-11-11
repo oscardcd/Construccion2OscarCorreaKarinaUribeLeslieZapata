@@ -19,6 +19,11 @@ public class Patient {
     private String id;
 
     @NotBlank
+    @Column(unique = true, nullable = false, length = 10)
+    private String identificationNumber;
+
+
+    @NotBlank
     @Column(nullable = false)
     private String fullName;
 
@@ -54,47 +59,47 @@ public class Patient {
     private HealthInsurance healthInsurance;
 
     @Column(nullable = false)
-    private boolean activo = true;
-
-    @Column(name = "copago_anual_acumulado")
-    private Double copagoAnualAcumulado = 0.0;
+    private boolean active = true;
 
     @Column(name = "annual_copay_accumulated")
-    private Integer annualCopayAccumulated;
+    private Double annualCopayAccumulated = 0.0;
+
+    @Column(name = "current_copay_year")
+    private Integer currentCopayYear;
 
     public Patient() {
-        this.annualCopayAccumulated = LocalDate.now().getYear();
-    }
+    this.currentCopayYear = LocalDate.now().getYear();
+}
 
     public int getAge() {
         if (birthDate == null) {
             return 0;
         }
-        return Period.between(birthDate), LocalDate.now()).getYears();
+        return Period.between(birthDate, LocalDate.now()).getYears();
     }
 
     public void resetCopayIfNewYear() {
-        int anoActual = LocalDate.now().getYear();
-        if (this.currentCopayYear != currentYear) {
+        int currentYear = LocalDate.now().getYear();
+        if (this.currentCopayYear == null || !this.currentCopayYear.equals(currentYear)) {
             this.annualCopayAccumulated = 0.0;
             this.currentCopayYear = currentYear;
         }
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getCedula() {
-        return cedula;
+    public String getIdentificaionNumber() {
+        return identificationNumber;
     }
 
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
+    public void setIdentificationNumber(String identificationNumbera) {
+        this.identificationNumber = identificationNumber;
     }
 
     public String getFullName() {
@@ -129,12 +134,12 @@ public class Patient {
         this.adress = adress;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setPhoneNumber(String telefono) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {
@@ -145,12 +150,12 @@ public class Patient {
         this.email = email;
     }
 
-    public ContactoEmergencia getContactoEmergencia() {
-        return contactoEmergencia;
+    public EmergencyContact getEmergencyContact() {
+        return emergencyContact;
     }
 
-    public void setContactoEmergencia(ContactoEmergencia contactoEmergencia) {
-        this.contactoEmergencia = contactoEmergencia;
+    public void setEmergencyContact(EmergencyContact emergencyContact) {
+        this.emergencyContact = emergencyContact;
     }
 
     public HealthInsurance gethealthInsurance() {
@@ -161,27 +166,27 @@ public class Patient {
         this.healthInsurance = healthInsurance;
     }
 
-    public boolean isActivo() {
-        return activo;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setActivo(boolean activo) {
-        this.activo = activo;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
-    public Double getCopagoAnualAcumulado() {
-        return copagoAnualAcumulado;
+    public Double getAnnualCopayAccumulated() {
+        return annualCopayAccumulated;
     }
 
-    public void setCopagoAnualAcumulado(Double copagoAnualAcumulado) {
-        this.copagoAnualAcumulado = copagoAnualAcumulado;
+    public void setAnnualCopayAccumulated(Double annualCopayAccumulated) {
+        this.annualCopayAccumulated = annualCopayAccumulated;
     }
 
-    public Integer getAnoCopagoActual() {
-        return anoCopagoActual;
+    public Integer getCurrentCopayYear() {
+        return currentCopayYear;
     }
 
-    public void setAnoCopagoActual(Integer anoCopagoActual) {
-        this.anoCopagoActual = anoCopagoActual;
+    public void setCurrentCopayYear(Integer currentCopayYear) {
+        this.currentCopayYear = currentCopayYear;
     }
 }
