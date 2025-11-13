@@ -41,7 +41,28 @@ public class AuthenticationAdapter implements AuthenticationPort {
             throw new Exception("Usuario inactivo");
         }
 
-        if (!passwordEncoder.matches(credentials.getContrasena(), empleado.getContrasena())) {
+        // Verificar contraseña
+        boolean passwordMatches = false;
+        String storedPassword = empleado.getContrasena();
+        
+        // Si la contraseña almacenada parece ser BCrypt (empieza con $2a$, $2b$, o $2y$)
+        if (storedPassword != null && (storedPassword.startsWith("$2a$") || 
+                                       storedPassword.startsWith("$2b$") || 
+                                       storedPassword.startsWith("$2y$"))) {
+            // Comparar con BCrypt
+            passwordMatches = passwordEncoder.matches(credentials.getContrasena(), storedPassword);
+        } else {
+            // Contraseña en texto plano (para migración gradual)
+            passwordMatches = credentials.getContrasena().equals(storedPassword);
+            
+            // Si la contraseña coincide y está en texto plano, actualizarla a BCrypt
+            if (passwordMatches) {
+                empleado.setContrasena(passwordEncoder.encode(credentials.getContrasena()));
+                empleadoPort.save(empleado);
+            }
+        }
+        
+        if (!passwordMatches) {
             throw new Exception("Credenciales inválidas");
         }
 
