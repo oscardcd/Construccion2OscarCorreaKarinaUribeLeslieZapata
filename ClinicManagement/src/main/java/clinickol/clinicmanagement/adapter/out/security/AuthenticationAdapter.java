@@ -23,7 +23,15 @@ public class AuthenticationAdapter implements AuthenticationPort {
 
     @Override
     public TokenResponse authenticate(AuthCredentials credentials) throws Exception {
-        EmpleadoDomain empleado = empleadoPort.findByNombreUsuario(credentials.getNombreUsuario());
+        if (credentials == null || credentials.getNombreUsuario() == null || credentials.getNombreUsuario().trim().isEmpty()) {
+            throw new Exception("El nombre de usuario es requerido");
+        }
+        
+        if (credentials.getContrasena() == null || credentials.getContrasena().trim().isEmpty()) {
+            throw new Exception("La contraseña es requerida");
+        }
+        
+        EmpleadoDomain empleado = empleadoPort.findByNombreUsuario(credentials.getNombreUsuario().trim());
         
         if (empleado == null) {
             throw new Exception("Usuario no encontrado");

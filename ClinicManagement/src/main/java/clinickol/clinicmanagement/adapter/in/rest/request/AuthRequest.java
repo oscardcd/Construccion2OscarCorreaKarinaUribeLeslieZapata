@@ -1,7 +1,12 @@
 package clinickol.clinicmanagement.adapter.in.rest.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class AuthRequest {
+    @JsonProperty("nombreUsuario")
     private String nombreUsuario;
+    
+    @JsonProperty("contrasena")
     private String contrasena;
 
     public AuthRequest() {
